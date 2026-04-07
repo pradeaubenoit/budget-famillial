@@ -1138,14 +1138,13 @@ function soldeGlissantCat(catId, semaineCible) {
 }
 
 function soldeGlissantGlobal(semaineCible) {
+  // Même logique : report de la semaine précédente uniquement, plafonné à 1 semaine
   const budgetHebdo = DB.seuils.global_semaine || 0;
   if (!budgetHebdo) return null;
-  let totalDepense = 0;
-  for (let w = 1; w <= semaineCible; w++) {
-    const txs = txW(w);
-    totalDepense += sumD(txs);
-  }
-  return budgetHebdo * semaineCible - totalDepense;
+  if (semaineCible <= 1) return 0;
+  const depPrec = sumD(txW(semaineCible - 1));
+  const report = budgetHebdo - depPrec;
+  return Math.max(-budgetHebdo, Math.min(budgetHebdo, report));
 }
 
 function rSeuils(){
