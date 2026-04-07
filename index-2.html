@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Budget Familial 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#f5f4ef;--card:#fff;--text:#1a1915;--muted:#7a7970;--faint:#d0cfc8;
+  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --green:#0f8a5f;--green-lt:#e2f5ec;--red:#c94a20;--red-lt:#faeae4;
+  --amber:#a86200;--amber-lt:#fef0d6;--blue:#2070b8;--blue-lt:#e4eff9;
+  --r:14px;--sbt:env(safe-area-inset-bottom,0px);--stt:env(safe-area-inset-top,0px);
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#141410;--card:#1f1f1b;--text:#edeae2;--muted:#888680;--faint:#3a3a35;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);
+  --green:#1aaa72;--green-lt:#04291c;--red:#e05a30;--red-lt:#2e1208;
+  --amber:#d48000;--amber-lt:#291a00;--blue:#4a9fe0;--blue-lt:#071b30;
+}}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;background:var(--bg);color:var(--text);max-width:540px;margin:0 auto;padding-bottom:calc(70px + var(--sbt));min-height:100vh;font-size:15px}
+button,input,select,textarea{font-family:inherit;font-size:inherit}
+/* TOPBAR */
+.topbar{padding:calc(10px + var(--stt)) 18px 0;position:sticky;top:0;background:var(--bg);z-index:60;border-bottom:0.5px solid var(--border)}
+.topbar-row{display:flex;justify-content:space-between;align-items:center;padding-bottom:4px}
+.appname{font-size:18px;font-weight:600;letter-spacing:-.3px}
+.sync-btn{background:none;border:0.5px solid var(--border2);border-radius:8px;padding:5px 10px;font-size:12px;color:var(--muted);cursor:pointer}
+.mnav{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.mnav button{width:30px;height:30px;border:0.5px solid var(--border2);border-radius:8px;background:none;color:var(--text);cursor:pointer;font-size:16px}
+.mnav button:active{opacity:.6}
+.mlbl{flex:1;text-align:center;font-size:14px;font-weight:600}
+.tabs{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;padding:9px 10px 8px;font-size:11.5px;font-weight:500;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;text-align:center;margin-bottom:-0.5px;white-space:nowrap}
+.tab.on{color:var(--text);border-bottom-color:var(--text)}
+/* PAGES */
+.page{display:none;padding:14px 18px 8px;animation:fi .18s ease}
+.page.on{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+.sh{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin:18px 0 8px}
+/* KPIS */
+.kgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:4px}
+.kcard{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);padding:13px 14px}
+.kcard.wide{grid-column:1/-1}
+.kcard.ok{border-color:var(--green);background:var(--green-lt)}
+.kcard.warn{border-color:var(--amber);background:var(--amber-lt)}
+.kcard.over{border-color:var(--red);background:var(--red-lt)}
+.kl{font-size:11px;color:var(--muted);margin-bottom:3px}
+.kv{font-size:21px;font-weight:600;letter-spacing:-.3px}
+.ks{font-size:12px;color:var(--muted);margin-top:2px}
+.pos{color:var(--green)}.neg{color:var(--red)}
+/* PROGRESS */
+.pb{height:4px;background:var(--faint);border-radius:2px;margin-top:7px;overflow:hidden}
+.pf{height:100%;border-radius:2px;transition:width .4s}
+.pf.ok{background:var(--green)}.pf.warn{background:var(--amber)}.pf.over{background:var(--red)}
+/* BADGE */
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px}
+.badge.ok{background:var(--green-lt);color:var(--green)}
+.badge.warn{background:var(--amber-lt);color:var(--amber)}
+.badge.over{background:var(--red-lt);color:var(--red)}
+/* ROWS */
+.rows{display:flex;flex-direction:column;gap:7px}
+.rc{background:var(--card);border:0.5px solid var(--border);border-radius:11px;padding:12px 14px}
+.rc.ao{border-color:var(--red)}.rc.aw{border-color:var(--amber)}
+.rtop{display:flex;justify-content:space-between;align-items:flex-start}
+.rname{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.rr{text-align:right}
+.ramt{font-size:15px;font-weight:600}
+.rsub{font-size:11px;color:var(--muted);margin-top:1px}
+/* TX */
+.tx-list{display:flex;flex-direction:column;gap:5px}
+.tx{background:var(--card);border:0.5px solid var(--border);border-radius:10px;padding:11px 13px;display:flex;justify-content:space-between;align-items:center}
+.txl .txlbl{font-size:14px;font-weight:500}
+.txl .txmeta{font-size:12px;color:var(--muted);margin-top:1px}
+.txr{display:flex;align-items:center;gap:6px}
+.txamt{font-size:15px;font-weight:600}
+.delbtn{background:none;border:none;color:var(--faint);font-size:18px;cursor:pointer;padding:2px 4px;line-height:1}
+.delbtn:active{color:var(--red)}
+/* FAB */
+.fab-wrap{position:fixed;bottom:calc(70px + var(--sbt) + 10px);right:18px;z-index:55;display:flex;flex-direction:column;gap:9px;align-items:flex-end}
+.fab{width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;font-size:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 14px rgba(0,0,0,.2)}
+.fab.main{background:var(--text);color:var(--bg)}
+.fab.scan{background:var(--blue-lt);color:var(--blue);width:44px;height:44px;font-size:18px}
+.fab:active{transform:scale(.92)}
+/* BNAV */
+.bnav{position:fixed;bottom:0;left:0;right:0;max-width:540px;margin:0 auto;background:var(--card);border-top:0.5px solid var(--border2);display:flex;padding-bottom:var(--sbt);z-index:60}
+.nb{flex:1;padding:9px 0 8px;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);font-size:10px;font-weight:500}
+.nb.on{color:var(--text)}
+.ni{font-size:19px;line-height:1}
+/* OVERLAY / MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;display:none;align-items:flex-end;justify-content:center}
+.overlay.open{display:flex}
+.modal{background:var(--card);border-radius:20px 20px 0 0;padding:20px 18px calc(22px + var(--sbt));width:100%;max-width:540px;max-height:92vh;overflow-y:auto}
+.mhdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.mtitle{font-size:17px;font-weight:600}
+.mclose{background:none;border:none;font-size:24px;color:var(--muted);cursor:pointer}
+.fg{margin-bottom:13px}
+.fg label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;font-weight:500}
+.fg input,.fg select,.fg textarea{width:100%;padding:11px 13px;background:var(--bg);border:0.5px solid var(--border2);border-radius:10px;color:var(--text);font-size:15px}
+.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--blue)}
+.typerow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:13px}
+.tbtn{padding:10px;border:0.5px solid var(--border2);border-radius:10px;background:none;color:var(--muted);cursor:pointer;font-size:14px;font-weight:500}
+.tbtn.dep.on{background:var(--red-lt);color:var(--red);border-color:var(--red)}
+.tbtn.rev.on{background:var(--green-lt);color:var(--green);border-color:var(--green)}
+.sbtn{width:100%;padding:14px;background:var(--text);color:var(--bg);border:none;border-radius:11px;font-size:15px;font-weight:600;cursor:pointer;margin-top:4px}
+.sbtn:active{opacity:.82}
+.sbtn.secondary{background:none;color:var(--text);border:0.5px solid var(--border2);margin-top:8px}
+/* FICHE */
+.fiche-section{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:14px}
+.fiche-section-title{font-size:13px;font-weight:600;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.add-line-btn{font-size:12px;padding:5px 12px;border:0.5px solid var(--border2);border-radius:8px;background:none;color:var(--blue);cursor:pointer;font-weight:500}
+.fiche-item{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:0.5px solid var(--border)}
+.fiche-item:last-child{border-bottom:none;padding-bottom:0}
+.fiche-item input[type=text]{flex:2;padding:8px 10px;background:var(--bg);border:0.5px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px}
+.fiche-item input[type=number]{flex:1;padding:8px 10px;background:var(--bg);border:0.5px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px;text-align:right}
+.fiche-item input:focus{outline:none;border-color:var(--blue)}
+.fiche-item select{flex:1;padding:8px 6px;background:var(--bg);border:0.5px solid var(--border2);border-radius:8px;color:var(--text);font-size:12px}
+.fiche-del{background:none;border:none;color:var(--faint);font-size:18px;cursor:pointer;padding:2px 4px;flex-shrink:0}
+.fiche-del:active{color:var(--red)}
+.fiche-lbl{font-size:11px;color:var(--muted);flex-shrink:0;width:28px;text-align:right}
+/* COLOR PICKER */
+.color-dot-btn{width:28px;height:28px;border-radius:50%;border:2px solid var(--border2);cursor:pointer;flex-shrink:0}
+/* SCAN */
+#scan-prev{width:100%;max-height:190px;object-fit:contain;border-radius:10px;display:none;margin-bottom:11px}
+.scan-res{background:var(--green-lt);border:0.5px solid var(--green);border-radius:10px;padding:11px 14px;margin-bottom:12px;display:none}
+.scan-res .srl{font-size:11px;color:var(--green);font-weight:600;margin-bottom:3px}
+.scan-res .srv{font-size:22px;font-weight:700;color:var(--green)}
+/* PREVI */
+.ptable{width:100%;border-collapse:collapse;font-size:13px;min-width:380px}
+.ptable th{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:6px 8px;text-align:left;border-bottom:0.5px solid var(--border2)}
+.ptable td{padding:8px 8px;border-bottom:0.5px solid var(--border);vertical-align:middle}
+.ptable tr:last-child td{border-bottom:none}
+.ptable .num{text-align:right;font-variant-numeric:tabular-nums}
+.ptable tr.cur td{font-weight:600;background:var(--blue-lt)}
+.scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -18px;padding:0 18px}
+.scroll-x::-webkit-scrollbar{display:none}
+/* CHART */
+.chart-bars{display:flex;align-items:flex-end;gap:4px;height:80px;margin:6px 0 4px}
+.bc{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px}
+.bar{width:100%;border-radius:3px 3px 0 0;min-height:3px}
+.blbl{font-size:9px;color:var(--muted);text-align:center}
+/* SEUILS */
+.seuil-row{background:var(--card);border:0.5px solid var(--border);border-radius:11px;padding:11px 13px;display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.si{width:85px;padding:7px 10px;background:var(--bg);border:0.5px solid var(--border2);border-radius:8px;color:var(--text);font-size:14px;text-align:right}
+.si:focus{outline:none;border-color:var(--blue)}
+.save-s{width:100%;padding:13px;background:var(--text);color:var(--bg);border:none;border-radius:11px;font-size:15px;font-weight:600;cursor:pointer;margin-top:12px}
+/* WEEK NAV */
+.wrow{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.wrow button{width:30px;height:30px;border:0.5px solid var(--border2);border-radius:8px;background:none;color:var(--text);cursor:pointer;font-size:16px}
+.wlbl{flex:1;text-align:center;font-size:13px;font-weight:500}
+/* MONTHS GRID in fiche */
+.months-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:6px}
+.months-grid input{padding:5px 4px;font-size:11px;text-align:center;border-radius:6px}
+.month-mini-lbl{font-size:9px;color:var(--muted);text-align:center;margin-bottom:2px}
+/* TOAST */
+.toast{position:fixed;top:calc(80px + var(--stt));left:50%;transform:translateX(-50%) translateY(-8px);background:var(--text);color:var(--bg);padding:9px 18px;border-radius:20px;font-size:13px;font-weight:500;z-index:200;opacity:0;transition:all .22s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.empty{color:var(--muted);font-size:13px;padding:4px 0}
+/* REVENUS fiche */
+.rev-item{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:0.5px solid var(--border)}
+.rev-item:last-child{border-bottom:none;padding-bottom:0}
+.rev-item input[type=text]{flex:2;padding:8px 10px;background:var(--bg);border:0.5px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px}
+.rev-item input[type=number]{flex:1;padding:8px 10px;background:var(--bg);border:0.5px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px;text-align:right}
+.rev-item input:focus{outline:none;border-color:var(--blue)}
+/* INFO NOTE */
+.info-note{background:var(--blue-lt);border:0.5px solid var(--blue);border-radius:10px;padding:10px 13px;font-size:12px;color:var(--blue);margin-bottom:14px;line-height:1.5}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-row">
+    <span class="appname">💰 Budget Familial</span>
+    <button class="sync-btn" onclick="openModal('sync-modal')">⇅ Sync</button>
+  </div>
+  <div class="mnav">
+    <button onclick="changeMonth(-1)">‹</button>
+    <span class="mlbl" id="month-lbl">—</span>
+    <button onclick="changeMonth(1)">›</button>
+  </div>
+  <div class="tabs">
+    <button class="tab on"  onclick="showPage('dashboard',this)">Accueil</button>
+    <button class="tab"     onclick="showPage('semaine',this)">Semaine</button>
+    <button class="tab"     onclick="showPage('mois',this)">Mois</button>
+    <button class="tab"     onclick="showPage('annee',this)">Année</button>
+    <button class="tab"     onclick="showPage('seuils',this)">Seuils</button>
+    <button class="tab"     onclick="showPage('fiche',this)">📋 Fiche</button>
+  </div>
+</div>
+
+<!-- ═══ PAGE DASHBOARD ═══ -->
+<div class="page on" id="p-dashboard">
+  <!-- SOLDE LIVE DU JOUR -->
+  <div id="d-solde-live"></div>
+  <div id="d-kpis"></div>
+  <div class="sh">Dépenses variables ce mois</div>
+  <div class="rows" id="d-cats"></div>
+  <div class="sh">Alertes</div>
+  <div id="d-alerts"></div>
+</div>
+
+<!-- ═══ PAGE SEMAINE ═══ -->
+<div class="page" id="p-semaine">
+  <div class="wrow">
+    <button onclick="changeWeek(-1)">‹</button>
+    <span class="wlbl" id="wlbl">—</span>
+    <button onclick="changeWeek(1)">›</button>
+  </div>
+  <!-- Jauge globale semaine -->
+  <div id="w-global"></div>
+  <!-- Bloc alertes dépassements -->
+  <div id="w-alertes"></div>
+  <!-- Détail par catégorie avec seuils hebdo -->
+  <div class="sh">Détail par catégorie</div>
+  <div class="rows" id="w-cats"></div>
+  <!-- Transactions du jour séparées -->
+  <div class="sh" id="w-today-sh" style="display:none">Aujourd'hui</div>
+  <div class="tx-list" id="w-tx-today"></div>
+  <div class="sh">Toutes les transactions</div>
+  <div class="tx-list" id="w-tx"></div>
+</div>
+
+<!-- ═══ PAGE MOIS ═══ -->
+<div class="page" id="p-mois">
+  <div id="m-kpis"></div>
+  <div class="sh">Charges fixes ce mois</div>
+  <div class="rows" id="m-fixes"></div>
+  <div class="sh">Dépenses variables</div>
+  <div class="rows" id="m-vars"></div>
+  <div class="sh">Toutes les transactions</div>
+  <div class="tx-list" id="m-tx"></div>
+</div>
+
+<!-- ═══ PAGE ANNEE ═══ -->
+<div class="page" id="p-annee">
+  <div style="background:var(--card);border:0.5px solid var(--border2);border-radius:var(--r);padding:13px 14px;margin-bottom:14px;display:flex;align-items:center;gap:12px">
+    <div style="flex:1">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Solde de départ (1er avril 2026)</div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <input type="number" id="solde-depart" value="-2600" step="1"
+          style="width:130px;padding:8px 11px;background:var(--bg);border:0.5px solid var(--border2);border-radius:9px;color:var(--red);font-size:17px;font-weight:600"
+          onchange="DB.soldeDepart=parseFloat(this.value)||0;sv();rAn()">
+        <span style="font-size:13px;color:var(--muted)">&#8364;</span>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--muted);text-align:right;line-height:1.7">Modifiez si votre<br>solde change</div>
+  </div>
+  <div id="a-kpis"></div>
+  <div class="sh">Solde cumule mois par mois</div>
+  <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -18px;padding:0 18px">
+    <div id="a-chart" style="min-width:360px;margin:6px 0 4px"></div>
+  </div>
+  <div class="sh" style="display:flex;justify-content:space-between;align-items:center">
+    <span>Variables previsionnelles</span>
+    <button onclick="toggleVarEdit()" id="var-edit-btn" style="font-size:12px;padding:4px 10px;border:0.5px solid var(--border2);border-radius:7px;background:none;color:var(--blue);cursor:pointer">Modifier</button>
+  </div>
+  <div id="a-vars-edit" style="display:none;margin-bottom:12px"></div>
+  <div class="sh">Tableau previsionnel</div>
+  <div class="scroll-x"><table class="ptable" id="a-table"></table></div>
+  <div style="height:8px"></div>
+</div>
+
+<!-- ═══ PAGE SEUILS ═══ -->
+<div class="page" id="p-seuils">
+  <div class="info-note">Définissez un budget <strong>hebdomadaire</strong> par catégorie. Le solde non dépensé se reporte sur la semaine suivante (crédit). Un dépassement crée une dette déduite de la semaine suivante.</div>
+
+  <div class="sh">Budget global / semaine</div>
+  <div class="seuil-row">
+    <div class="dot" style="background:var(--muted)"></div>
+    <span style="flex:1;font-size:14px;font-weight:500">Total toutes catégories</span>
+    <input class="si" type="number" id="sg" placeholder="500">
+    <span style="font-size:13px;color:var(--muted)">€/sem</span>
+  </div>
+
+  <div class="sh">Budget hebdomadaire par catégorie</div>
+  <div id="sl"></div>
+
+  <div class="sh">Solde glissant — semaine en cours (S<span id="seuil-semaine-num">—</span>)</div>
+  <div id="sl-glissant"></div>
+
+  <button class="save-s" onclick="saveSeuils()">Enregistrer les budgets</button>
+  <div style="height:16px"></div>
+</div>
+
+<!-- ═══ PAGE FICHE DE RENSEIGNEMENTS ═══ -->
+<div class="page" id="p-fiche">
+  <div class="info-note">Cette fiche est votre tableau de bord de configuration. Toutes les modifications sont automatiquement prises en compte dans les calculs.</div>
+
+  <!-- REVENUS -->
+  <div class="fiche-section">
+    <div class="fiche-section-title">
+      <span>💶 Revenus mensuels</span>
+      <button class="add-line-btn" onclick="addRevenu()">+ Ajouter</button>
+    </div>
+    <div id="fiche-revenus"></div>
+  </div>
+
+  <!-- CHARGES FIXES -->
+  <div class="fiche-section">
+    <div class="fiche-section-title">
+      <span>🔒 Charges fixes</span>
+      <button class="add-line-btn" onclick="addFiche('fixes')">+ Ajouter</button>
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-bottom:10px">Montant par mois (0 = pas de prélèvement ce mois)</p>
+    <div id="fiche-fixes"></div>
+  </div>
+
+  <!-- CATÉGORIES VARIABLES -->
+  <div class="fiche-section">
+    <div class="fiche-section-title">
+      <span>🏷️ Catégories variables</span>
+      <button class="add-line-btn" onclick="addFiche('cats')">+ Ajouter</button>
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-bottom:10px">Les catégories utilisées pour saisir vos dépenses du quotidien</p>
+    <div id="fiche-cats"></div>
+  </div>
+
+  <button class="save-s" onclick="saveFiche()">✓ Enregistrer la fiche</button>
+  <div style="height:20px"></div>
+</div>
+
+<!-- FABs -->
+<div class="fab-wrap">
+  <button class="fab scan" onclick="openScan()" title="Photo ticket">📷</button>
+  <button class="fab main" onclick="openAdd()" title="Ajouter">+</button>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bnav">
+  <button class="nb on" onclick="navTo('dashboard',this)"><span class="ni">◉</span>Accueil</button>
+  <button class="nb"    onclick="navTo('semaine',this)"><span class="ni">📅</span>Semaine</button>
+  <button class="nb"    onclick="navTo('mois',this)"><span class="ni">📊</span>Mois</button>
+  <button class="nb"    onclick="navTo('annee',this)"><span class="ni">📈</span>Année</button>
+  <button class="nb"    onclick="navTo('fiche',this)"><span class="ni">📋</span>Fiche</button>
+</div>
+
+<!-- MODAL ADD TX -->
+<div class="overlay" id="add-modal">
+  <div class="modal">
+    <div class="mhdr"><span class="mtitle" id="add-title">Nouvelle dépense</span><button class="mclose" onclick="cm('add-modal')">×</button></div>
+    <div class="typerow">
+      <button class="tbtn dep on" id="btn-dep" onclick="setType('dep')">− Dépense</button>
+      <button class="tbtn rev"    id="btn-rev" onclick="setType('rev')">+ Revenu</button>
+    </div>
+    <div class="fg"><label>Montant (€)</label><input type="number" inputmode="decimal" id="tx-mnt" placeholder="0.00" step="0.01"></div>
+    <div class="fg"><label>Libellé</label><input type="text" id="tx-lbl" placeholder="Description…"></div>
+    <div class="fg" id="cg"><label>Catégorie</label><select id="tx-cat"></select></div>
+    <div class="fg"><label>Date</label><input type="date" id="tx-date"></div>
+    <button class="sbtn" onclick="saveTx()">Enregistrer</button>
+  </div>
+</div>
+
+<!-- MODAL SCAN -->
+<div class="overlay" id="scan-modal">
+  <div class="modal">
+    <div class="mhdr"><span class="mtitle">📷 Scanner un ticket</span><button class="mclose" onclick="cm('scan-modal')">×</button></div>
+    <div class="fg"><label>Photo du ticket</label><input type="file" accept="image/*" capture="environment" id="tfile" onchange="handleTicket(this)"></div>
+    <img id="scan-prev" alt="Ticket">
+    <div class="scan-res" id="scan-res"><div class="srl">Montant détecté</div><div class="srv" id="srv">—</div></div>
+    <div class="fg"><label>Montant (€) — vérifier ou corriger</label><input type="number" inputmode="decimal" id="sc-mnt" placeholder="0.00" step="0.01"></div>
+    <div class="fg"><label>Libellé</label><input type="text" id="sc-lbl" placeholder="Ex: Courses Leclerc"></div>
+    <div class="fg"><label>Catégorie</label><select id="sc-cat"></select></div>
+    <div class="fg"><label>Date</label><input type="date" id="sc-date"></div>
+    <button class="sbtn" onclick="saveScan()">Enregistrer</button>
+  </div>
+</div>
+
+<!-- MODAL SYNC -->
+<div class="overlay" id="sync-modal">
+  <div class="modal">
+    <div class="mhdr"><span class="mtitle">⇅ Synchronisation</span><button class="mclose" onclick="cm('sync-modal')">×</button></div>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:16px;line-height:1.6">Exportez vos données (transactions + configuration) en JSON. Importez sur un autre appareil via iCloud Drive ou OneDrive.</p>
+    <button class="sbtn" onclick="exportData()">📤 Exporter toutes mes données</button>
+    <div class="fg" style="margin-top:12px"><label>Importer depuis un fichier JSON</label><input type="file" accept=".json" id="imp-file" onchange="importData(this)"></div>
+  </div>
+</div>
+
+<!-- MODAL COULEUR CAT -->
+<div class="overlay" id="color-modal">
+  <div class="modal">
+    <div class="mhdr"><span class="mtitle">Choisir une couleur</span><button class="mclose" onclick="cm('color-modal')">×</button></div>
+    <div id="color-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;padding:10px 0"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════
+//  DONNÉES PAR DÉFAUT (depuis Excel synthèse 2026)
+// ═══════════════════════════════════════════════════
+const MONTHS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const PALETTE=['#1D9E75','#378ADD','#9B6FD4','#E07A20','#2AABB0','#D4965A','#5A8CD4','#D44E5A','#8AA63C','#A06840','#D45A8C','#7A7970','#4A8070','#C94A20','#2070B8','#A86200','#0F8A5F'];
+
+const DEF_REVENUS = [
+  {id:'sal_b',  nom:'Salaire Benoît',          mois:[3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000]},
+  {id:'sal_r',  nom:'Salaire Rachel',           mois:[2084.46,2069.88,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000]},
+  {id:'alloc',  nom:'Allocations familiales',   mois:[885.73,885,885,885,885,885,885,885,885,885,885,885]},
+  {id:'form_r', nom:'Formation Rachel',         mois:[155.82,0,0,0,0,155.82,0,0,0,0,0,0]},
+  {id:'remb_e', nom:'Remboursement eau',        mois:[96.56,0,0,0,0,0,0,0,0,0,0,0]},
+  
+];
+
+const DEF_FIXES = [
+  {id:'f1',  nom:"Loyer",                       mois:[1158,1158,1158,1158,1158,1158,1158,1158,1158,1158,1158,1158]},
+  {id:'f2',  nom:"Assurance Crédit Agricole",   mois:[32.32,32.32,32.32,32.32,32.32,32.32,32.32,32.32,32.32,32.32,32.32,32.32]},
+  {id:'f3',  nom:"Assurance Hab.",              mois:[47.20,47.20,47.20,47.20,47.20,47.20,47.20,47.20,47.20,47.20,47.20,47.20]},
+  {id:'f4',  nom:"Assurance voiture R4",        mois:[56,56,56,56,56,56,56,56,56,56,56,56]},
+  {id:'f5',  nom:"Assurances banque pop.",      mois:[16.05,16.05,16.05,16.05,16.05,16.05,16.05,16.05,16.05,16.05,16.05,16.05]},
+  {id:'f6',  nom:"Carte premium",               mois:[17,17,17,17,17,17,17,17,17,17,17,17]},
+  {id:'f7',  nom:"Ceatis",                      mois:[744.95,744.95,744.95,744.95,744.95,744.95,744.95,744.95,744.95,744.95,744.95,744.95]},
+  {id:'f8',  nom:"Cofidis",                     mois:[239.32,239.32,239.32,239.32,239.32,239.32,239.32,239.32,239.32,239.32,239.32,239.32]},
+  {id:'f9',  nom:"Darty",                       mois:[109.61,21.99,21.99,21.99,21.99,21.99,21.99,21.99,21.99,21.99,21.99,21.99]},
+  {id:'f10', nom:"Disney+",                     mois:[0,13.99,10.99,10.99,10.99,10.99,10.99,10.99,10.99,10.99,10.99,10.99]},
+  {id:'f11', nom:"Eau",                         mois:[75,75,75,75,75,75,75,75,75,75,75,75]},
+  {id:'f12', nom:"École Jeanne d'Arc",          mois:[143,143,143,143,143,143,143,143,143,143,143,143]},
+  {id:'f13', nom:"EDF",                         mois:[90.48,90.48,90.48,90.48,90.48,90.48,90.48,90.48,90.48,90.48,90.48,90.48]},
+  {id:'f14', nom:"Épargne congés Rachel",       mois:[0,0,200,200,200,200,200,200,200,200,200,200]},
+  {id:'f15', nom:"Épargne budget vacances",     mois:[0,0,200,200,200,200,200,200,200,200,200,200]},
+  {id:'f16', nom:"Frais bancaire",              mois:[182.31,0,0,0,0,0,0,0,0,0,0,0]},
+  {id:'f17', nom:"Impôts",                      mois:[0,0,0,0,0,0,0,0,0,0,0,0]},
+  {id:'f18', nom:"SFR",                         mois:[100.93,41.98,41.98,41.98,41.98,41.98,41.98,41.98,41.98,41.98,41.98,41.98]},
+  {id:'f19', nom:"Mutuelle",                    mois:[0,0,0,0,0,0,0,0,0,0,0,0]},
+  {id:'f20', nom:"Netflix",                     mois:[0,25.99,14.99,14.99,14.99,14.99,14.99,14.99,14.99,14.99,14.99,14.99]},
+  {id:'f21', nom:"Prêt conso CA",               mois:[101.61,101.61,101.61,101.61,101.61,101.61,101.61,101.61,101.61,101.61,101.61,101.61]},
+  {id:'f22', nom:"Prêt renouvelable CA",        mois:[315,315,315,315,315,315,315,315,315,315,315,315]},
+  {id:'f23', nom:"Prêt voiture loc.",           mois:[220,220,220,220,220,220,220,220,220,220,220,220]},
+  {id:'f24', nom:"Prime Video",                 mois:[0,6.99,0,0,0,0,0,0,0,0,0,0]},
+  {id:'f25', nom:"Prêt Sofinco",                mois:[94,94,94,94,94,94,94,94,94,94,94,94]},
+  {id:'f26', nom:"Téléphone Cornelia SOSH",     mois:[25.99,116,25.99,25.99,25.99,25.99,25.99,25.99,25.99,25.99,25.99,25.99]},
+  {id:'f27', nom:"Deezer + Apple",              mois:[24.99,24.99,24.99,24.99,24.99,24.99,24.99,24.99,24.99,24.99,24.99,24.99]},
+  {id:'f28', nom:"Amazon",                      mois:[109.61,109.61,109.61,0,0,0,0,0,0,0,0,0]},
+  {id:'f29', nom:"Basic Fit",                   mois:[0,35,35,35,35,35,35,35,35,35,35,35]},
+  {id:'f30', nom:"Transport",                   mois:[0,51.93,0,0,0,0,0,0,0,0,0,0]},
+  {id:'f31', nom:"Trotinette",                  mois:[65.28,65.28,65.28,65.28,65.28,65.28,65.28,65.28,65.28,65.28,0,0]},
+  {id:'f32', nom:"Verisure",                    mois:[63.90,63.90,63.90,63.90,63.90,63.90,63.90,63.90,63.90,63.90,63.90,63.90]},
+  {id:'f33', nom:"Assurance Clio",              mois:[70,70,70,70,70,70,70,70,70,70,70,70]},
+  {id:'f34', nom:"AP Eliott",                   mois:[60,20,0,0,0,0,0,0,0,0,0,0]},
+  {id:'f35', nom:"AP Eden",                     mois:[0,0,0,0,0,0,0,0,0,0,0,0]},
+  {id:'f36', nom:"Pixpay",                      mois:[11.98,11.98,0,0,0,0,0,0,0,0,0,0]},
+  {id:'f37', nom:"Nounou",                      mois:[109.50,0,136,136,136,136,136,136,136,136,136,136]},
+  {id:'f38', nom:"Ass. banque pop. vie",        mois:[408.40,0,0,0,0,0,0,0,0,0,0,0]},
+  {id:'f39', nom:"Taxe foncière",               mois:[122,0,0,0,0,0,0,0,0,0,0,0]},
+  {id:'f40', nom:"Huissier",                    mois:[100,0,0,0,0,0,0,0,0,0,0,0]},
+  {id:'f41', nom:"Animaux",                     mois:[194.55,0,109.23,0,109.23,0,109.23,0,109.23,0,109.23,0]},
+];
+
+const DEF_CATS = [
+  {id:'alimentation',  nom:'Alimentation',       couleur:'#1D9E75'},
+  {id:'sorties',       nom:'Sorties & loisirs',   couleur:'#378ADD'},
+  {id:'vetements',     nom:'Vêtements',           couleur:'#9B6FD4'},
+  {id:'coiffeur',      nom:'Coiffeur',            couleur:'#E07A20'},
+  {id:'sport',         nom:'Sport',               couleur:'#2AABB0'},
+  {id:'vacances',      nom:'Vacances',            couleur:'#D4965A'},
+  {id:'frais_ecoles',  nom:'Frais écoles',        couleur:'#5A8CD4'},
+  {id:'sante',         nom:'Santé',               couleur:'#D44E5A'},
+  {id:'babioles',      nom:'Babioles',            couleur:'#8AA63C'},
+  {id:'meubles',       nom:'Achat mobilier',      couleur:'#A06840'},
+  {id:'anniversaires', nom:'Anniversaires',       couleur:'#D45A8C'},
+  {id:'pret_famille',  nom:'Prêt famille',        couleur:'#7A7970'},
+  {id:'retrait',       nom:'Retrait espèces',     couleur:'#4A8070'},
+];
+
+// ═══════════════════════════════════════════════════
+//  STORAGE
+// ═══════════════════════════════════════════════════
+let DB;
+try{DB=JSON.parse(localStorage.getItem('bf26')||'null');}catch(e){DB=null;}
+if(!DB) DB={transactions:[],seuils:{},revenus:JSON.parse(JSON.stringify(DEF_REVENUS)),fixes:JSON.parse(JSON.stringify(DEF_FIXES)),cats:JSON.parse(JSON.stringify(DEF_CATS))};
+if(!DB.revenus) DB.revenus=JSON.parse(JSON.stringify(DEF_REVENUS));
+if(!DB.fixes)   DB.fixes=JSON.parse(JSON.stringify(DEF_FIXES));
+if(!DB.cats)    DB.cats=JSON.parse(JSON.stringify(DEF_CATS));
+if(!DB.seuils)  DB.seuils={};
+if(DB.soldeDepart===undefined) DB.soldeDepart=-2600;
+// Migration : supprimer congés/vacances des revenus si présents
+if(DB.revenus){
+  DB.revenus=DB.revenus.filter(r=>r.id!=='conge_r'&&r.id!=='vacance');
+  // Corriger salaire Rachel si encore avec montants cumulatifs
+  const sr=DB.revenus.find(r=>r.id==='sal_r');
+  if(sr&&sr.mois[3]===400) sr.mois=[2084.46,2069.88,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000];
+}
+// Renommer f14/f15 si anciens noms
+if(DB.fixes){
+  const f14=DB.fixes.find(f=>f.id==='f14');
+  const f15=DB.fixes.find(f=>f.id==='f15');
+  if(f14&&f14.nom.includes('Congés')) f14.nom='Épargne congés Rachel';
+  if(f15&&f15.nom.includes('Budget')) f15.nom='Épargne budget vacances';
+}
+sv();
+function sv(){localStorage.setItem('bf26',JSON.stringify(DB));}
+
+// helpers
+function totFixesMois(m){return DB.fixes.reduce((s,f)=>s+(f.mois[m]||0),0);}
+function totRevMois(m){return DB.revenus.reduce((s,r)=>s+(r.mois[m]||0),0);}
+
+// ═══════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════
+let cM=new Date().getMonth(),cY=2026,cW=isoWeek(new Date()),txType='dep';
+let colorTargetId=null,colorTargetType=null;
+
+function isoWeek(d){const dt=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));dt.setUTCDate(dt.getUTCDate()+4-(dt.getUTCDay()||7));const y=new Date(Date.UTC(dt.getUTCFullYear(),0,1));return Math.ceil(((dt-y)/86400000+1)/7);}
+function weekRange(w){const s=new Date(cY,0,1+(w-1)*7),dw=s.getDay();const mon=new Date(s);mon.setDate(s.getDate()-(dw<=4?dw-1:dw-8));const sun=new Date(mon);sun.setDate(mon.getDate()+6);return{mon,sun};}
+function fmt(d){const dt=new Date(d);return`${String(dt.getDate()).padStart(2,'0')}/${String(dt.getMonth()+1).padStart(2,'0')}`;}
+function fmtE(n){return n.toFixed(2).replace('.',',')+' €';}
+function fs(n){return Math.round(n)+' €';}
+function today(){return new Date().toISOString().split('T')[0];}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+
+// ═══════════════════════════════════════════════════
+//  NAVIGATION
+// ═══════════════════════════════════════════════════
+function showPage(id,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  renderPage(id);
+}
+function navTo(id,btn){
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  renderPage(id);
+}
+function changeMonth(d){cM=(cM+d+12)%12;document.getElementById('month-lbl').textContent=MONTHS[cM].slice(0,4);renderActive();}
+function changeWeek(d){cW=Math.max(1,Math.min(53,cW+d));renderActive();}
+function renderActive(){const a=document.querySelector('.page.on');if(a)renderPage(a.id.replace('p-',''));}
+function renderPage(id){
+  if(id==='dashboard')rDash();
+  else if(id==='semaine')rSem();
+  else if(id==='mois')rMois();
+  else if(id==='annee')rAn();
+  else if(id==='seuils')rSeuils();
+  else if(id==='fiche')rFiche();
+}
+
+// ═══════════════════════════════════════════════════
+//  TX HELPERS
+// ═══════════════════════════════════════════════════
+function txM(m){return DB.transactions.filter(t=>{const d=new Date(t.date);return d.getMonth()===m&&d.getFullYear()===cY;});}
+function txW(w){const{mon,sun}=weekRange(w);return DB.transactions.filter(t=>{const d=new Date(t.date);return d>=mon&&d<=sun;});}
+function sumD(txs){return txs.filter(t=>t.type==='dep').reduce((s,t)=>s+t.m,0);}
+function sumR(txs){return txs.filter(t=>t.type==='rev').reduce((s,t)=>s+t.m,0);}
+function sumC(txs,c){return txs.filter(t=>t.type==='dep'&&t.cat===c).reduce((s,t)=>s+t.m,0);}
+function gc(id){return DB.cats.find(c=>c.id===id)||{nom:id,couleur:'#888'};}
+function getSeuil(id){return DB.seuils[id]||0;}
+function stClass(sp,sl){if(!sl)return'ok';const r=sp/sl;return r>=1?'over':r>=.8?'warn':'ok';}
+function stLbl(sp,sl){if(!sl)return'';const r=sp/sl;return r>=1?'⚠ Dépassé':r>=.8?'! Attention':'OK OK';}
+
+// ═══════════════════════════════════════════════════
+//  RENDER DASHBOARD
+// ═══════════════════════════════════════════════════
+function semainesDuMois(m){
+  const sem=[], d=new Date(cY,m,1), fin=new Date(cY,m+1,0);
+  let cur=new Date(d);
+  while(cur<=fin){const w=isoWeek(cur);if(!sem.includes(w))sem.push(w);cur.setDate(cur.getDate()+7);}
+  return sem;
+}
+function rDash(){
+  const txs      = txM(cM);
+  const depReel  = sumD(txs);
+  const rev      = totRevMois(cM);
+  const fix      = totFixesMois(cM);
+
+  // ── Semaines du mois ────────────────────────────
+  // semainesDuMois définie globalement ci-dessous
+  const semDuMois   = semainesDuMois(cM);
+  const nbSemMois   = semDuMois.length;
+  const semPassees  = semDuMois.filter(w=>w<=cW);
+  const semRestantes= semDuMois.filter(w=>w>cW);
+
+  // ── Projection variables fin de mois ────────────
+  const projCats = DB.cats.map(cat=>{
+    const bH         = DB.seuils['h_'+cat.id]||0;
+    const depMoisReel= sumC(txs, cat.id);
+    const derniereSemPas = semPassees.length ? semPassees[semPassees.length-1] : null;
+    const soldeGliss = derniereSemPas ? soldeGlissantCat(cat.id, derniereSemPas) : 0;
+    const prevRestant= bH * semRestantes.length;
+    const totalPrev  = depMoisReel + prevRestant;
+    const budgetMois = bH * nbSemMois;
+    return {cat, bH, depReel:depMoisReel, prevRestant, total:totalPrev, budgetMois, soldeGliss};
+  });
+  const totalVarPrev  = projCats.reduce((s,p)=>s+p.total, 0);
+  const soldePrevMois = rev - fix - totalVarPrev;
+  const enveloppeVar  = rev - fix;
+  const margeVar      = enveloppeVar - totalVarPrev;
+
+  // ── SOLDE DU JOUR ───────────────────────────────
+  // Les charges fixes sont prélevées en totalité dès le 1er du mois.
+  // Le solde du jour = soldeDepart + revenus du mois (prévus) - fixes du mois - variables saisies à ce jour
+  const soldeDepart = DB.soldeDepart !== undefined ? DB.soldeDepart : -2600;
+  const soldeDuJour = soldeDepart + rev - fix - depReel;
+  // Évolution : même calcul mais hier (sans les tx d'aujourd'hui)
+  const depHier = DB.transactions
+    .filter(t=>{ const d=new Date(t.date); const h=new Date(); h.setDate(h.getDate()-1);
+      return t.type==='dep' && t.date===h.toISOString().split('T')[0]; })
+    .reduce((s,t)=>s+t.m, 0);
+  const depAujourd = DB.transactions
+    .filter(t=>t.type==='dep'&&t.date===today())
+    .reduce((s,t)=>s+t.m, 0);
+  const soldeCoul = soldeDuJour>=0?'var(--green)':'var(--red)';
+
+  // Sparkline 7 jours (solde reconstruit chaque jour = soldeDepart+rev-fix-varSaisiesJusquAuJour)
+  const sparkDays=[];
+  for(let i=6;i>=0;i--){
+    const d=new Date(); d.setDate(d.getDate()-i);
+    const ds=d.toISOString().split('T')[0];
+    const varJ=DB.transactions.filter(t=>t.type==='dep'&&t.date<=ds&&new Date(t.date).getMonth()===cM).reduce((s,t)=>s+t.m,0);
+    sparkDays.push({label:String(d.getDate()), solde: soldeDepart+rev-fix-varJ});
+  }
+  const sparkMin=Math.min(...sparkDays.map(s=>s.solde));
+  const sparkMax=Math.max(...sparkDays.map(s=>s.solde),sparkMin+1);
+  const sparkH=34;
+  const sparkSvg = sparkDays.length<2?'':(()=>{
+    const W=220, pts=sparkDays.map((s,i)=>{
+      const x=Math.round(i*(W/(sparkDays.length-1)));
+      const y=Math.round(sparkH-((s.solde-sparkMin)/(sparkMax-sparkMin))*sparkH);
+      return x+','+y;
+    }).join(' ');
+    const ls=sparkDays[sparkDays.length-1].solde;
+    const lx=W, ly=Math.round(sparkH-((ls-sparkMin)/(sparkMax-sparkMin))*sparkH);
+    return `<svg viewBox="0 0 ${W} ${sparkH}" style="width:100%;height:${sparkH}px;display:block;margin-top:8px">
+      <polyline points="${pts}" fill="none" stroke="${ls>=0?'var(--green)':'var(--red)'}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="${lx}" cy="${ly}" r="3.5" fill="${ls>=0?'var(--green)':'var(--red)'}"/>
+    </svg>`;
+  })();
+
+  // ── RENDER SOLDE LIVE ────────────────────────────
+  document.getElementById('d-solde-live').innerHTML=`
+    <div style="background:var(--card);border:0.5px solid ${soldeDuJour>=0?'var(--green)':'var(--red)'};border-radius:var(--r);padding:16px 16px 12px;margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div>
+          <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Solde estimé aujourd'hui</div>
+          <div style="font-size:36px;font-weight:700;letter-spacing:-.5px;color:${soldeCoul};line-height:1">${soldeDuJour>=0?'+':''}${Math.round(soldeDuJour).toLocaleString('fr')} €</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:6px">${new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}</div>
+        </div>
+        <div style="text-align:right;padding-top:2px">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:3px">Dépensé aujourd'hui</div>
+          <div style="font-size:17px;font-weight:600;color:${depAujourd>0?'var(--red)':'var(--muted)'}">${depAujourd>0?'−'+fmtE(depAujourd):'—'}</div>
+          ${depHier>0?`<div style="font-size:11px;color:var(--muted);margin-top:3px">Hier : −${fmtE(depHier)}</div>`:''}
+        </div>
+      </div>
+      ${sparkSvg}
+      ${sparkDays.length>=2?`<div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:2px">${sparkDays.map(s=>`<span>${s.label}</span>`).join('')}</div>`:''}
+      <div style="display:grid;grid-template-columns:1fr 1px 1fr 1px 1fr;gap:0;margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border);text-align:center">
+        <div><div style="font-size:10px;color:var(--muted);margin-bottom:2px">Fixes du mois</div><div style="font-size:12px;font-weight:600;color:var(--red)">−${Math.round(fix).toLocaleString('fr')} €</div></div>
+        <div style="background:var(--border)"></div>
+        <div><div style="font-size:10px;color:var(--muted);margin-bottom:2px">Variables saisies</div><div style="font-size:12px;font-weight:600;color:var(--red)">−${Math.round(depReel).toLocaleString('fr')} €</div></div>
+        <div style="background:var(--border)"></div>
+        <div><div style="font-size:10px;color:var(--muted);margin-bottom:2px">Fin de mois prévu</div><div style="font-size:12px;font-weight:600;color:${soldePrevMois>=0?'var(--green)':'var(--red)'}">  ${soldePrevMois>=0?'+':''}${Math.round(soldePrevMois).toLocaleString('fr')} €</div></div>
+      </div>
+    </div>`;
+
+  // ── RENDER KPIS mois ────────────────────────────
+  const sPcl=soldePrevMois>=0?'ok':'over';
+  document.getElementById('d-kpis').innerHTML=`
+    <div class="kgrid">
+      <div class="kcard"><div class="kl">Revenus ${MONTHS[cM]}</div><div class="kv pos">${fmtE(rev)}</div></div>
+      <div class="kcard"><div class="kl">Charges fixes</div><div class="kv neg">${fmtE(fix)}</div></div>
+      <div class="kcard"><div class="kl">Variables saisies</div><div class="kv neg">${fmtE(depReel)}</div><div class="ks">à ce jour</div></div>
+      <div class="kcard ${sPcl}"><div class="kl">Solde prévu fin mois</div><div class="kv ${soldePrevMois>=0?'pos':'neg'}">${soldePrevMois>=0?'+':''}${Math.round(soldePrevMois).toLocaleString('fr')} €</div><div class="ks">fixes + vars prévues</div></div>
+    </div>
+    <div style="background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-top:9px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em">Enveloppe variables</span>
+        <span style="font-size:12px;color:var(--muted)">${nbSemMois} sem. · budget prévu ${fmtE(totalVarPrev)}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+        <span style="font-size:17px;font-weight:600;color:${margeVar>=0?'var(--green)':'var(--red)'}">Marge : ${margeVar>=0?'+':''}${Math.round(margeVar).toLocaleString('fr')} €</span>
+      </div>
+      <div class="pb"><div class="pf ${enveloppeVar>0?stClass(totalVarPrev,enveloppeVar):'over'}" style="width:${enveloppeVar>0?Math.min(100,Math.round(totalVarPrev/enveloppeVar*100)):100}%"></div></div>
+    </div>`;
+
+  // ── DÉTAIL PAR CATÉGORIE ─────────────────────────
+  document.getElementById('d-cats').innerHTML = projCats.map(p=>{
+    const {cat,bH,depReel:dR,prevRestant,total,budgetMois,soldeGliss}=p;
+    // Afficher toutes les cats : celles avec dépenses OU avec budget défini
+    if(!dR && !bH) return '';
+    const pct   = budgetMois>0?Math.min(120,Math.round(total/budgetMois*100)):0;
+    const st    = budgetMois>0?stClass(total,budgetMois):'ok';
+    const ecart = budgetMois>0
+      ? (total<=budgetMois
+          ? `<span style="color:var(--green);font-size:11px">✓ reste ${fmtE(budgetMois-total)}</span>`
+          : `<span style="color:var(--red);font-size:11px">⚠ +${fmtE(total-budgetMois)} dépassement prévu</span>`)
+      : '';
+    const gliss = bH&&soldeGliss!==0
+      ? (soldeGliss>0
+          ? `<span style="font-size:11px;color:var(--green)">↑ +${fmtE(soldeGliss)} crédit sem.</span>`
+          : `<span style="font-size:11px;color:var(--red)">↓ ${fmtE(soldeGliss)} dette sem.</span>`)
+      : '';
+    return `<div class="rc ${st==='over'?'ao':st==='warn'?'aw':''}">
+      <div class="rtop">
+        <div class="rname"><div class="dot" style="background:${cat.couleur}"></div>${cat.nom}</div>
+        <div class="rr">
+          <div class="ramt neg">${fmtE(total)}</div>
+          <div class="rsub">${budgetMois>0?'/ '+fmtE(budgetMois)+' ce mois':''}</div>
+        </div>
+      </div>
+      ${budgetMois>0?`<div class="pb"><div class="pf ${st}" style="width:${Math.min(100,pct)}%"></div></div>`:''}
+      <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:5px;flex-wrap:wrap;gap:3px">
+        <span style="color:var(--muted)">Saisi : ${fmtE(dR)}${prevRestant>0?' · À venir : '+fmtE(prevRestant):''}</span>
+        ${ecart}
+      </div>
+      ${gliss?`<div style="margin-top:2px">${gliss}</div>`:''}
+    </div>`;
+  }).join('') || '<p class="empty">Aucune dépense ni budget variable défini ce mois.</p>';
+
+  // ── ALERTES ──────────────────────────────────────
+  let al='';
+  // Alerte solde fin de mois négatif
+  if(soldePrevMois<0){
+    al+=`<div class="rc ao" style="margin-bottom:7px">
+      <div class="rtop"><div class="rname">⚠ Solde fin de mois négatif</div><span class="badge over">Déficit</span></div>
+      <div class="ks" style="margin-top:4px;color:var(--red)">Il manquera <strong>${fmtE(-soldePrevMois)}</strong> fin ${MONTHS[cM].toLowerCase()}. Réduisez les variables.</div>
+    </div>`;
+  }
+  // Alertes par catégorie
+  projCats.forEach(p=>{
+    const {cat,bH,total,budgetMois}=p;
+    if(!budgetMois)return;
+    const st=stClass(total,budgetMois);
+    if(st==='ok')return;
+    al+=`<div class="rc" style="margin-bottom:7px">
+      <div class="rtop"><div class="rname"><div class="dot" style="background:${cat.couleur}"></div>${cat.nom}</div><span class="badge ${st}">${st==='over'?'⚠ Dépassement prévu':'! Attention'}</span></div>
+      <div class="ks" style="margin-top:4px">Prévu : ${fmtE(total)} · Budget : ${fmtE(budgetMois)}${st==='over'?` · <span style="color:var(--red)">+${fmtE(total-budgetMois)} de trop</span>`:''}</div>
+    </div>`;
+  });
+  // Alerte semaine
+  const wd=sumD(txW(cW)),ws=DB.seuils.global_semaine||0;
+  if(ws){const wst=stClass(wd,ws);if(wst!=='ok')al=`<div class="rc" style="margin-bottom:7px"><div class="rtop"><div class="rname">Semaine S${cW}</div><span class="badge ${wst}">${stLbl(wd,ws)}</span></div><div class="ks" style="margin-top:4px">${fmtE(wd)} / ${fmtE(ws)}</div></div>`+al;}
+
+  document.getElementById('d-alerts').innerHTML=al||'<p style="color:var(--green);font-size:13px">✓ Tout est dans les clous</p>';
+}
+// ═══════════════════════════════════════════════════
+//  RENDER SEMAINE
+// ═══════════════════════════════════════════════════
+function rSem(){
+  const{mon,sun}=weekRange(cW);
+  const todayStr=today();
+  const isCurrentWeek=(new Date(todayStr)>=mon && new Date(todayStr)<=sun);
+  document.getElementById('wlbl').textContent=`S${cW} — ${fmt(mon)} au ${fmt(sun)}`;
+
+  const txs=txW(cW);
+  const dep=sumD(txs);
+  const txsDep=txs.filter(t=>t.type==='dep');
+  const nbTx=txsDep.length;
+
+  // ── JAUGE GLOBALE ────────────────────────────────
+  const ws=getSeuil('global_semaine');
+  const wst=ws?stClass(dep,ws):'';
+  const wp=ws?Math.min(100,Math.round(dep/ws*100)):0;
+  const reste=ws?ws-dep:null;
+  const depPasse=ws&&dep>ws?dep-ws:0;
+
+  // Dépense moyenne journalière cette semaine
+  const joursEcoules=isCurrentWeek?Math.max(1,Math.round((new Date(todayStr)-mon)/86400000)+1):7;
+  const moyJour=dep>0?Math.round(dep/joursEcoules):0;
+  const projFin=ws&&isCurrentWeek?Math.round(moyJour*7):null;
+
+  let globalHtml=`<div class="kcard wide ${wst}" style="margin-bottom:9px">`;
+  if(!ws){
+    globalHtml+=`<div style="display:flex;justify-content:space-between;align-items:center">
+      <div><div class="kl">Dépenses cette semaine</div><div class="kv neg">${fmtE(dep)}</div></div>
+      <div style="text-align:right"><div class="kl">Transactions</div><div class="kv">${nbTx}</div></div>
+    </div>`;
+  } else {
+    globalHtml+=`<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+      <div><div class="kl">Dépenses semaine</div><div class="kv neg">${fmtE(dep)}</div></div>
+      <div style="text-align:right"><div class="kl">Budget</div><div class="kv">${fmtE(ws)}</div></div>
+    </div>
+    <div class="pb"><div class="pf ${wst}" style="width:${wp}%"></div></div>
+    <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:12px">
+      <span style="color:var(--muted)">${wp}% utilisé · ${nbTx} tx</span>
+      <span style="color:${wst==='over'?'var(--red)':wst==='warn'?'var(--amber)':'var(--green)'}">
+        ${wst==='over'?`Dépassé de ${fmtE(depPasse)}`:
+          reste!==null?`Reste ${fmtE(reste)}`:''}
+      </span>
+    </div>`;
+    if(isCurrentWeek&&projFin!==null){
+      const projSt=stClass(projFin,ws);
+      globalHtml+=`<div style="margin-top:8px;padding-top:8px;border-top:0.5px solid var(--border);font-size:12px;color:var(--muted)">
+        Projection fin de semaine : <strong style="color:${projSt==='over'?'var(--red)':projSt==='warn'?'var(--amber)':'var(--green)'}">${fmtE(projFin)}</strong>
+        ${projFin>ws?`<span style="color:var(--red)"> → dépassement prévu de ${fmtE(projFin-ws)}</span>`:''}
+      </div>`;
+    }
+  }
+  globalHtml+=`</div>`;
+  document.getElementById('w-global').innerHTML=globalHtml;
+
+  // ── BLOC ALERTES ─────────────────────────────────
+  // Seuil hebdo par cat = seuil mensuel / 4.33
+  let alertes=[];
+
+  // Alerte globale
+  if(ws&&wst!=='ok'){
+    alertes.push({
+      couleur: wst==='over'?'var(--red)':'var(--amber)',
+      icon: wst==='over'?'[!]':'!',
+      titre: wst==='over'?`Budget semaine DÉPASSÉ`:`Budget semaine à ${wp}%`,
+      detail: wst==='over'
+        ? `Vous avez dépensé ${fmtE(dep)} pour un budget de ${fmtE(ws)}. Dépassement : ${fmtE(depPasse)}.`
+        : `Il vous reste ${fmtE(reste)} sur votre budget de ${fmtE(ws)}.`
+    });
+  }
+
+  // Alertes par catégorie — budget hebdo glissant
+  DB.cats.forEach(c=>{
+    const s=sumC(txs,c.id);
+    if(!s)return;
+    const bH=DB.seuils['h_'+c.id]||0;
+    if(!bH)return;
+    const soldePrevSem=cW>1?soldeGlissantCat(c.id,cW-1):0;
+    const budgetEff=bH+(soldePrevSem||0);
+    const st=stClass(s,budgetEff);
+    if(st==='ok')return;
+    const reportTxt=soldePrevSem>0
+      ? ` Budget augmenté de ${fmtE(soldePrevSem)} grâce au report de la semaine précédente.`
+      : soldePrevSem<0
+        ? ` Budget réduit de ${fmtE(-soldePrevSem)} à cause du dépassement précédent.`
+        : '';
+    alertes.push({
+      couleur: c.couleur,
+      icon: st==='over'?'⚠':'!',
+      titre: `${c.nom} — ${st==='over'?'Dépassé':'Attention'}`,
+      detail: st==='over'
+        ? `${fmtE(s)} dépensé · budget semaine : ${fmtE(budgetEff)} · dépassement : ${fmtE(s-budgetEff)}.${reportTxt}`
+        : `${fmtE(s)} / ${fmtE(budgetEff)} (${Math.round(s/budgetEff*100)}%).${reportTxt}`
+    });
+  });
+
+  const alertBox = alertes.length===0
+    ? `<div style="background:var(--green-lt);border:0.5px solid var(--green);border-radius:11px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:var(--green);font-weight:500">✓ Tout est dans les clous cette semaine</div>`
+    : `<div style="display:flex;flex-direction:column;gap:7px;margin-bottom:14px">`
+      + alertes.map(a=>`
+        <div style="background:var(--card);border:0.5px solid ${a.couleur};border-radius:11px;padding:12px 14px;border-left:4px solid ${a.couleur}">
+          <div style="font-size:14px;font-weight:600;margin-bottom:4px">${a.icon} ${a.titre}</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.5">${a.detail}</div>
+        </div>`).join('')
+      + `</div>`;
+  document.getElementById('w-alertes').innerHTML=alertBox;
+
+  // ── CATÉGORIES ───────────────────────────────────
+  const catsWithDep=DB.cats.filter(c=>sumC(txs,c.id)>0);
+  if(!catsWithDep.length){
+    document.getElementById('w-cats').innerHTML='<p class="empty">Aucune dépense cette semaine.</p>';
+  } else {
+    // Trier par montant décroissant
+    const sorted=[...catsWithDep].sort((a,b)=>sumC(txs,b.id)-sumC(txs,a.id));
+    document.getElementById('w-cats').innerHTML=sorted.map(c=>{
+      const s=sumC(txs,c.id);
+      const bH=DB.seuils['h_'+c.id]||0;
+      const soldePrevCat=cW>1?soldeGlissantCat(c.id,cW-1):0;
+      const budgetEffCat=bH+(soldePrevCat||0); // budget de base + report/dette
+      const slH=budgetEffCat;
+      const st=slH?stClass(s,slH):'ok';
+      const pt=slH?Math.min(100,Math.round(s/slH*100)):0;
+      // Liste des tx de cette cat cette semaine
+      const catTxs=txsDep.filter(t=>t.cat===c.id).sort((a,b)=>new Date(b.date)-new Date(a.date));
+      const txLines=catTxs.map(t=>`<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-top:0.5px solid var(--border)">
+        <span style="color:var(--muted)">${fmt(t.date)} ${t.lbl?'· '+t.lbl:''}</span>
+        <span style="font-weight:500">${fmtE(t.m)}</span>
+      </div>`).join('');
+      return`<div class="rc ${st==='over'?'ao':st==='warn'?'aw':''}">
+        <div class="rtop" style="margin-bottom:${slH||catTxs.length>1?'6px':'0'}">
+          <div class="rname"><div class="dot" style="background:${c.couleur}"></div>${c.nom}</div>
+          <div class="rr">
+            <div class="ramt">${fmtE(s)}</div>
+            ${slH?`<div class="rsub">${fmtE(slH)}/sem · ${stLbl(s,slH)}</div>`:''}
+          </div>
+        </div>
+        ${slH?`<div class="pb"><div class="pf ${st}" style="width:${pt}%"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:3px">
+            <span>${pt}% du seuil hebdo</span>
+            <span>${slH-s>0?`reste ${fmtE(slH-s)}`:`dépassé de ${fmtE(s-slH)}`}</span>
+          </div>`:''}
+        ${txLines}
+      </div>`;
+    }).join('');
+  }
+
+  // ── TRANSACTIONS DU JOUR ─────────────────────────
+  const txToday=txsDep.filter(t=>t.date===todayStr).sort((a,b)=>a.id<b.id?1:-1);
+  const shToday=document.getElementById('w-today-sh');
+  if(isCurrentWeek&&txToday.length){
+    shToday.style.display='';
+    document.getElementById('w-tx-today').innerHTML=txToday.map(txHtml).join('');
+  } else {
+    shToday.style.display='none';
+    document.getElementById('w-tx-today').innerHTML='';
+  }
+
+  // ── TOUTES LES TRANSACTIONS ───────────────────────
+  document.getElementById('w-tx').innerHTML=
+    txsDep.length
+      ? [...txsDep].sort((a,b)=>new Date(b.date)-new Date(a.date)).map(txHtml).join('')
+      : '<p class="empty">—</p>';
+}
+
+// ═══════════════════════════════════════════════════
+//  RENDER MOIS
+// ═══════════════════════════════════════════════════
+function rMois(){
+  const txs=txM(cM),dep=sumD(txs),rev=totRevMois(cM),fix=totFixesMois(cM),tot=dep+fix,bil=rev-tot,pct=rev>0?Math.min(100,Math.round(tot/rev*100)):0;
+  const ppf=pct>100?'over':pct>85?'warn':'ok';
+  document.getElementById('m-kpis').innerHTML=`<div class="kgrid"><div class="kcard"><div class="kl">Revenus prévus</div><div class="kv pos">${fs(rev)}</div></div><div class="kcard ${bil>=0?'ok':'over'}"><div class="kl">Bilan mensuel</div><div class="kv ${bil>=0?'pos':'neg'}">${fs(bil)}</div></div><div class="kcard wide"><div class="kl">Total dépenses (fixes + variables)</div><div style="display:flex;justify-content:space-between;align-items:baseline"><div class="kv neg">${fs(tot)}</div><div class="ks">fixes ${fs(fix)} + var ${fs(dep)}</div></div><div class="pb"><div class="pf ${ppf}" style="width:${pct}%"></div></div><div class="ks" style="margin-top:3px">${pct}% des revenus</div></div></div>`;
+  // Fixes ce mois (seulement les non nuls)
+  document.getElementById('m-fixes').innerHTML=DB.fixes.filter(f=>(f.mois[cM]||0)>0).map(f=>`<div class="rc"><div class="rtop"><div class="rname"><div class="dot" style="background:var(--faint)"></div>${f.nom}</div><div class="rr"><div class="ramt neg">${fmtE(f.mois[cM])}</div></div></div></div>`).join('')||'<p class="empty">Aucune charge ce mois.</p>';
+  // Variables
+  document.getElementById('m-vars').innerHTML=DB.cats.map(c=>{
+    const s=sumC(txs,c.id);if(!s)return'';
+    const bHM=DB.seuils['h_'+c.id]||0;
+    const slM=bHM*4.33; // seuil mensuel estimé depuis budget hebdo
+    const st=slM?stClass(s,slM):'ok',pt=slM?Math.min(100,Math.round(s/slM*100)):0;
+    return`<div class="rc ${st==='over'?'ao':st==='warn'?'aw':''}"><div class="rtop"><div class="rname"><div class="dot" style="background:${c.couleur}"></div>${c.nom}</div><div class="rr"><div class="ramt">${fs(s)}</div>${slM?`<div class="rsub">${stLbl(s,slM)} — ${fmtE(slM)}/mois</div>`:''}</div></div>${slM?`<div class="pb"><div class="pf ${st}" style="width:${pt}%"></div></div>`:''}</div>`;
+  }).join('')||'<p class="empty">Aucune dépense variable.</p>';
+  document.getElementById('m-tx').innerHTML=[...txs].sort((a,b)=>new Date(b.date)-new Date(a.date)).map(txHtml).join('')||'<p class="empty">—</p>';
+}
+
+// ═══════════════════════════════════════════════════
+//  RENDER ANNEE
+// ═══════════════════════════════════════════════════
+function rAn(){
+  // Solde de départ (sauvegardé en DB, défaut -2600 au 1er avril)
+  if(DB.soldeDepart===undefined) DB.soldeDepart=-2600;
+// Migration : supprimer congés/vacances des revenus si présents
+if(DB.revenus){
+  DB.revenus=DB.revenus.filter(r=>r.id!=='conge_r'&&r.id!=='vacance');
+  // Corriger salaire Rachel si encore avec montants cumulatifs
+  const sr=DB.revenus.find(r=>r.id==='sal_r');
+  if(sr&&sr.mois[3]===400) sr.mois=[2084.46,2069.88,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000];
+}
+// Renommer f14/f15 si anciens noms
+if(DB.fixes){
+  const f14=DB.fixes.find(f=>f.id==='f14');
+  const f15=DB.fixes.find(f=>f.id==='f15');
+  if(f14&&f14.nom.includes('Congés')) f14.nom='Épargne congés Rachel';
+  if(f15&&f15.nom.includes('Budget')) f15.nom='Épargne budget vacances';
+}
+sv();
+  const inputSD=document.getElementById('solde-depart');
+  if(inputSD&&inputSD!==document.activeElement) inputSD.value=DB.soldeDepart;
+
+  // Variables prévisionnelles par mois (modifiables par l'utilisateur)
+  if(!DB.varsPrev){
+    DB.varsPrev=MONTHS.map((_,i)=>{
+      // Pour avril+ : utiliser les vraies transactions si saisies, sinon estimation
+      const txs=DB.transactions.filter(t=>{const d=new Date(t.date);return d.getMonth()===i&&d.getFullYear()===cY;});
+      const reel=sumD(txs);
+      return reel>0?reel:600; // 600€ par défaut si rien de saisi
+    });
+  }
+
+  // Calcul cumulatif mois par mois
+  // Avant avril (mois 0-2) : données réelles uniquement
+  // Avril (mois 3) et après : solde de départ + cumul des bilans mensuels
+  const DEBUT_MOIS=3; // avril = index 3
+  const rows=MONTHS.map((m,i)=>{
+    const txs=DB.transactions.filter(t=>{const d=new Date(t.date);return d.getMonth()===i&&d.getFullYear()===cY;});
+    const vrReel=sumD(txs);
+    const revReel=sumR(txs);
+    const rv=revReel>0?revReel:totRevMois(i);
+    const fix=totFixesMois(i);
+    // Variables : réel si saisi, sinon prévisionnel éditable
+    const vr=vrReel>0?vrReel:(DB.varsPrev[i]||0);
+    const bil=rv-fix-vr;
+    const isReel=vrReel>0||revReel>0;
+    return{m,i,vr,rv,fix,bil,isReel,vrReel};
+  });
+
+  // Calcul du solde cumulé — démarre à soldeDepart au 1er avril
+  let soldeCumul=new Array(12).fill(0);
+  for(let i=0;i<12;i++){
+    if(i<DEBUT_MOIS){
+      soldeCumul[i]=null; // pas de solde cumulé avant avril
+    } else if(i===DEBUT_MOIS){
+      soldeCumul[i]=DB.soldeDepart+rows[i].bil;
+    } else {
+      soldeCumul[i]=(soldeCumul[i-1]||DB.soldeDepart)+rows[i].bil;
+    }
+  }
+
+  // Trouver le mois de retour au positif
+  let moisPositif=null;
+  for(let i=DEBUT_MOIS;i<12;i++){
+    if(soldeCumul[i]!==null&&soldeCumul[i]>=0){moisPositif=i;break;}
+  }
+
+  const soldeFin=soldeCumul[11];
+  const totRev=MONTHS.reduce((s,_,i)=>s+(rows[i].rv),0);
+  const totFix=MONTHS.reduce((s,_,i)=>s+totFixesMois(i),0);
+
+  // ── KPIS ──────────────────────────────────────────
+  let kpiHtml=`<div class="kgrid">
+    <div class="kcard ${DB.soldeDepart>=0?'ok':'over'}">
+      <div class="kl">Solde départ (1er avril)</div>
+      <div class="kv ${DB.soldeDepart>=0?'pos':'neg'}">${Math.round(DB.soldeDepart).toLocaleString('fr')} &#8364;</div>
+    </div>
+    <div class="kcard ${soldeFin>=0?'ok':'over'}">
+      <div class="kl">Solde fin décembre</div>
+      <div class="kv ${soldeFin>=0?'pos':'neg'}">${Math.round(soldeFin).toLocaleString('fr')} &#8364;</div>
+    </div>`;
+  if(moisPositif!==null){
+    kpiHtml+=`<div class="kcard wide ok">
+      <div class="kl">Retour au positif</div>
+      <div class="kv pos">${MONTHS[moisPositif]}</div>
+      <div class="ks">Solde : +${Math.round(soldeCumul[moisPositif]).toLocaleString('fr')} &#8364; fin ${MONTHS[moisPositif].toLowerCase()}</div>
+    </div>`;
+  } else if(DB.soldeDepart<0){
+    kpiHtml+=`<div class="kcard wide over">
+      <div class="kl">Retour au positif</div>
+      <div class="kv neg">Pas avant 2027</div>
+      <div class="ks">Solde fin décembre : ${Math.round(soldeFin).toLocaleString('fr')} &#8364;</div>
+    </div>`;
+  }
+  kpiHtml+=`</div>`;
+  document.getElementById('a-kpis').innerHTML=kpiHtml;
+
+  // ── GRAPHIQUE SOLDE CUMULÉ ────────────────────────
+  const valsChart=soldeCumul.filter(v=>v!==null);
+  const minV=Math.min(...valsChart,0);
+  const maxV=Math.max(...valsChart,0);
+  const range=Math.max(maxV-minV,1);
+  const H=90; // hauteur totale px
+  const zeroY=Math.round((maxV/range)*H); // position ligne zéro
+
+  let chartHtml=`<div style="position:relative;height:${H+24}px;display:flex;align-items:flex-end;gap:2px;padding-bottom:18px;min-width:360px">`;
+  // ligne zéro
+  chartHtml+=`<div style="position:absolute;left:0;right:0;bottom:${18+zeroY}px;height:1px;background:var(--border2);z-index:1"></div>`;
+
+  MONTHS.forEach((m,i)=>{
+    const v=soldeCumul[i];
+    if(v===null){
+      chartHtml+=`<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px">
+        <div style="width:100%;height:4px;background:var(--border);border-radius:2px;opacity:.3"></div>
+        <div style="font-size:9px;color:var(--faint)">${m[0]}</div>
+      </div>`;
+      return;
+    }
+    const isCur=i===cM;
+    const col=v>=0?'var(--green)':'var(--red)';
+    const barH=Math.max(4,Math.round((Math.abs(v)/range)*H));
+    const isPos=v>=0;
+    chartHtml+=`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;position:relative;z-index:2">
+      <div style="font-size:8px;color:${col};text-align:center;font-weight:600;line-height:1">${v>=0?'+':''}${Math.round(v/1000*10)/10}k</div>
+      <div style="width:100%;border-radius:3px 3px 0 0;height:${barH}px;background:${col};opacity:${isCur?1:.65};${isCur?'outline:2px solid '+col:''}"></div>
+      <div style="font-size:9px;color:${isCur?'var(--text)':'var(--muted)'};font-weight:${isCur?'600':'400'}">${m[0]}</div>
+    </div>`;
+  });
+  chartHtml+=`</div>`;
+  document.getElementById('a-chart').innerHTML=chartHtml;
+
+  // ── ÉDITEUR VARIABLES PRÉVISIONNELLES ─────────────
+  const editDiv=document.getElementById('a-vars-edit');
+  if(editDiv.style.display!=='none'){
+    editDiv.innerHTML=`<div style="background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);padding:14px">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5">Ajustez les dépenses variables prévues pour chaque mois. Les mois avec des transactions réelles ne sont pas modifiables.</p>
+      ${MONTHS.map((m,i)=>{
+        if(i<DEBUT_MOIS) return'';
+        const disabled=rows[i].vrReel>0;
+        return`<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:0.5px solid var(--border)">
+          <span style="width:70px;font-size:13px;font-weight:500">${m.slice(0,3)}</span>
+          ${disabled
+            ? `<span style="flex:1;font-size:13px;color:var(--muted)">Réel : ${Math.round(rows[i].vrReel)} &#8364;</span><span style="font-size:11px;padding:2px 8px;background:var(--blue-lt);color:var(--blue);border-radius:8px">Saisi</span>`
+            : `<input type="number" value="${Math.round(DB.varsPrev[i]||0)}" step="10"
+                style="flex:1;padding:7px 10px;background:var(--bg);border:0.5px solid var(--border2);border-radius:8px;color:var(--text);font-size:14px;text-align:right"
+                onchange="DB.varsPrev[${i}]=parseFloat(this.value)||0;sv();rAn()">
+              <span style="font-size:13px;color:var(--muted)">&#8364;</span>`
+          }
+        </div>`;
+      }).join('')}
+    </div>`;
+  }
+
+  // ── TABLEAU PRÉVISIONNEL ──────────────────────────
+  let ht=`<thead><tr>
+    <th>Mois</th>
+    <th class="num">Revenus</th>
+    <th class="num">Fixes</th>
+    <th class="num">Var.</th>
+    <th class="num">Bilan</th>
+    <th class="num">Solde</th>
+  </tr></thead><tbody>`;
+
+  rows.forEach((r,i)=>{
+    if(i<DEBUT_MOIS) return; // N'afficher qu'avril-décembre
+    const isCur=i===cM;
+    const s=soldeCumul[i];
+    const sCol=s>=0?'var(--green)':'var(--red)';
+    const bilCol=r.bil>=0?'var(--green)':'var(--red)';
+    const isPassePositif=i===moisPositif;
+    ht+=`<tr${isCur?' class="cur"':''}${isPassePositif?' style="background:var(--green-lt)"':''}>
+      <td style="white-space:nowrap;font-weight:${isPassePositif?'700':'400'}">
+        ${isPassePositif?'OK ':''} ${r.m.slice(0,4)}
+        ${r.isReel?'<span style="font-size:9px;color:var(--blue);margin-left:3px">●</span>':''}
+      </td>
+      <td class="num" style="color:var(--green)">${Math.round(r.rv).toLocaleString('fr')}</td>
+      <td class="num" style="color:var(--red)">${Math.round(r.fix).toLocaleString('fr')}</td>
+      <td class="num" style="color:var(--red)">${Math.round(r.vr).toLocaleString('fr')}</td>
+      <td class="num" style="color:${bilCol};font-weight:600">${r.bil>=0?'+':''}${Math.round(r.bil).toLocaleString('fr')}</td>
+      <td class="num" style="color:${sCol};font-weight:700">${s>=0?'+':''}${Math.round(s).toLocaleString('fr')}</td>
+    </tr>`;
+  });
+  ht+=`</tbody>`;
+  document.getElementById('a-table').innerHTML=ht;
+}
+
+function toggleVarEdit(){
+  const div=document.getElementById('a-vars-edit');
+  const btn=document.getElementById('var-edit-btn');
+  const isOpen=div.style.display!=='none';
+  div.style.display=isOpen?'none':'block';
+  btn.textContent=isOpen?'Modifier':'Fermer';
+  rAn();
+}
+
+// ═══════════════════════════════════════════════════
+//  RENDER SEUILS
+// ═══════════════════════════════════════════════════
+// ── CALCUL SOLDE GLISSANT ─────────────────────────
+// Pour une catégorie et une semaine donnée :
+// solde = budget_hebdo * nb_semaines_depuis_debut - total_dépensé_depuis_debut
+// Le "début" = semaine 1 de l'année (ou la première semaine avec un budget défini)
+function soldeGlissantCat(catId, semaineCible) {
+  const budgetHebdo = DB.seuils['h_'+catId] || 0;
+  if (!budgetHebdo) return null;
+  // Toutes les semaines de S1 à semaineCible incluse
+  let totalDepense = 0;
+  for (let w = 1; w <= semaineCible; w++) {
+    totalDepense += sumC(txW(w), catId);
+  }
+  const budgetCumul = budgetHebdo * semaineCible;
+  return budgetCumul - totalDepense; // positif = crédit, négatif = dette
+}
+
+function soldeGlissantGlobal(semaineCible) {
+  // Même logique : report de la semaine précédente uniquement, plafonné à 1 semaine
+  const budgetHebdo = DB.seuils.global_semaine || 0;
+  if (!budgetHebdo) return null;
+  if (semaineCible <= 1) return 0;
+  const depPrec = sumD(txW(semaineCible - 1));
+  const report = budgetHebdo - depPrec;
+  return Math.max(-budgetHebdo, Math.min(budgetHebdo, report));
+}
+
+function rSeuils(){
+  document.getElementById('sg').value = DB.seuils.global_semaine || 0;
+  document.getElementById('seuil-semaine-num').textContent = cW;
+
+  // Inputs budget hebdo par catégorie
+  document.getElementById('sl').innerHTML = DB.cats.map(c => {
+    const bH = DB.seuils['h_'+c.id] || 0;
+    const bJ = bH ? (bH/7).toFixed(2) : '';
+    return `<div class="seuil-row">
+      <div class="dot" style="background:${c.couleur}"></div>
+      <span style="flex:1;font-size:14px;font-weight:500">${c.nom}</span>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
+        <div style="display:flex;align-items:center;gap:5px">
+          <input class="si" type="number" id="sl-${c.id}" value="${bH||''}" placeholder="0"
+            oninput="updateBudgetHebdo('${c.id}',this.value)">
+          <span style="font-size:12px;color:var(--muted)">€/sem</span>
+        </div>
+        <span style="font-size:11px;color:var(--muted)" id="jour-${c.id}">${bJ?'≈ '+bJ+' €/j':''}</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Solde glissant semaine en cours
+  renderGlissant();
+}
+
+function updateBudgetHebdo(catId, val) {
+  const v = parseFloat(val) || 0;
+  DB.seuils['h_'+catId] = v;
+  const jourEl = document.getElementById('jour-'+catId);
+  if (jourEl) jourEl.textContent = v ? '≈ '+(v/7).toFixed(2)+' €/j' : '';
+}
+
+function renderGlissant() {
+  const rows = DB.cats.map(c => {
+    const bH = DB.seuils['h_'+c.id] || 0;
+    if (!bH) return null;
+    const solde = soldeGlissantCat(c.id, cW);
+    const depSem = sumC(txW(cW), c.id);
+    const budgetEffectif = bH + Math.min(0, solde - (bH - depSem)); // budget de base ± report
+    // Report = solde fin semaine précédente
+    const soldePrev = cW > 1 ? soldeGlissantCat(c.id, cW - 1) : 0;
+    const budgetCetteSem = bH + (soldePrev || 0); // budget + crédit ou - dette
+    const reste = budgetCetteSem - depSem;
+    const pct = budgetCetteSem > 0 ? Math.min(120, Math.round(depSem / budgetCetteSem * 100)) : 0;
+    const st = reste >= 0 ? (pct >= 80 ? 'warn' : 'ok') : 'over';
+    return { c, bH, soldePrev: soldePrev||0, budgetCetteSem, depSem, reste, pct, st, solde };
+  }).filter(Boolean);
+
+  if (!rows.length) {
+    document.getElementById('sl-glissant').innerHTML =
+      '<p class="empty">Définissez des budgets hebdomadaires ci-dessus.</p>';
+    return;
+  }
+
+  document.getElementById('sl-glissant').innerHTML = rows.map(r => {
+    const reportTxt = r.soldePrev > 0
+      ? `<span style="color:var(--green);font-size:11px">+${fmtE(r.soldePrev)} reporté</span>`
+      : r.soldePrev < 0
+        ? `<span style="color:var(--red);font-size:11px">${fmtE(r.soldePrev)} de dette</span>`
+        : '';
+    const resteTxt = r.reste >= 0
+      ? `<span style="color:var(--green)">reste ${fmtE(r.reste)}</span>`
+      : `<span style="color:var(--red)">dépassé de ${fmtE(-r.reste)}</span>`;
+    return `<div class="rc ${r.st==='over'?'ao':r.st==='warn'?'aw':''}" style="margin-bottom:7px">
+      <div class="rtop">
+        <div class="rname"><div class="dot" style="background:${r.c.couleur}"></div>${r.c.nom}</div>
+        <div class="rr">
+          <div class="ramt">${fmtE(r.depSem)}</div>
+          <div class="rsub">budget sem. : ${fmtE(r.budgetCetteSem)}</div>
+        </div>
+      </div>
+      <div class="pb" style="margin-top:7px"><div class="pf ${r.st}" style="width:${Math.min(100,r.pct)}%"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:4px;flex-wrap:wrap;gap:4px">
+        <span style="color:var(--muted)">${r.pct}% utilisé${reportTxt?' · ':''} ${reportTxt}</span>
+        ${resteTxt}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function saveSeuils(){
+  DB.seuils.global_semaine = parseFloat(document.getElementById('sg').value) || 0;
+  DB.cats.forEach(c => {
+    const el = document.getElementById('sl-'+c.id);
+    if (el) DB.seuils['h_'+c.id] = parseFloat(el.value) || 0;
+  });
+  sv();
+  toast('Budgets enregistrés ✓');
+  renderActive();
+}
+
+// ═══════════════════════════════════════════════════
+//  RENDER FICHE
+// ═══════════════════════════════════════════════════
+function rFiche(){
+  // REVENUS
+  document.getElementById('fiche-revenus').innerHTML=DB.revenus.map((r,i)=>`
+    <div class="rev-item" id="rev-item-${i}">
+      <input type="text" value="${r.nom}" placeholder="Libellé" onchange="DB.revenus[${i}].nom=this.value">
+      <input type="number" value="${r.mois[cM]||0}" placeholder="0" style="width:90px" onchange="updateRevMois(${i},${cM},this.value)">
+      <span style="font-size:11px;color:var(--muted);flex-shrink:0">€/${MONTHS[cM].slice(0,3)}</span>
+      <button class="fiche-del" onclick="delRevenu(${i})">×</button>
+    </div>`).join('');
+
+  // FIXES - avec les 12 mois sur 2 lignes de 6
+  document.getElementById('fiche-fixes').innerHTML=DB.fixes.map((f,i)=>`
+    <div class="fiche-item" style="flex-direction:column;align-items:stretch;gap:6px" id="fix-item-${i}">
+      <div style="display:flex;align-items:center;gap:8px">
+        <input type="text" value="${f.nom}" placeholder="Libellé" style="flex:1" onchange="DB.fixes[${i}].nom=this.value">
+        <button class="fiche-del" onclick="delFiche('fixes',${i})">×</button>
+      </div>
+      <div>
+        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:3px;margin-bottom:3px">
+          ${['J','F','M','A','M','J'].map((ml,mi)=>`<div style="font-size:9px;color:var(--muted);text-align:center">${ml}</div>`).join('')}
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:3px;margin-bottom:3px">
+          ${[0,1,2,3,4,5].map(mi=>`<input type="number" value="${f.mois[mi]||0}" style="padding:4px 3px;font-size:11px;text-align:center;border-radius:6px;border:0.5px solid var(--border2);background:var(--bg);color:var(--text);width:100%" onchange="DB.fixes[${i}].mois[${mi}]=parseFloat(this.value)||0">`).join('')}
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:3px;margin-bottom:3px">
+          ${['J','A','S','O','N','D'].map((ml)=>`<div style="font-size:9px;color:var(--muted);text-align:center">${ml}</div>`).join('')}
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:3px">
+          ${[6,7,8,9,10,11].map(mi=>`<input type="number" value="${f.mois[mi]||0}" style="padding:4px 3px;font-size:11px;text-align:center;border-radius:6px;border:0.5px solid var(--border2);background:var(--bg);color:var(--text);width:100%" onchange="DB.fixes[${i}].mois[${mi}]=parseFloat(this.value)||0">`).join('')}
+        </div>
+      </div>
+    </div>`).join('');
+
+  // CATÉGORIES VARIABLES
+  document.getElementById('fiche-cats').innerHTML=DB.cats.map((c,i)=>`
+    <div class="fiche-item" id="cat-item-${i}">
+      <button class="color-dot-btn" style="background:${c.couleur}" onclick="openColorPicker('cats',${i})"></button>
+      <input type="text" value="${c.nom}" placeholder="Nom catégorie" onchange="DB.cats[${i}].nom=this.value">
+      <button class="fiche-del" onclick="delFiche('cats',${i})">×</button>
+    </div>`).join('');
+}
+
+function updateRevMois(i,m,v){DB.revenus[i].mois[m]=parseFloat(v)||0;}
+function delRevenu(i){if(confirm('Supprimer ce revenu ?')){DB.revenus.splice(i,1);sv();rFiche();}}
+function addRevenu(){DB.revenus.push({id:uid(),nom:'Nouveau revenu',mois:[0,0,0,0,0,0,0,0,0,0,0,0]});rFiche();}
+function delFiche(type,i){
+  const nom=type==='fixes'?DB.fixes[i].nom:DB.cats[i].nom;
+  if(confirm(`Supprimer "${nom}" ?`)){
+    if(type==='fixes') DB.fixes.splice(i,1);
+    else DB.cats.splice(i,1);
+    sv();rFiche();
+  }
+}
+function addFiche(type){
+  if(type==='fixes') DB.fixes.push({id:uid(),nom:'Nouvelle charge',mois:[0,0,0,0,0,0,0,0,0,0,0,0]});
+  else DB.cats.push({id:uid(),nom:'Nouvelle catégorie',couleur:PALETTE[Math.floor(Math.random()*PALETTE.length)]});
+  rFiche();
+  setTimeout(()=>{const el=document.getElementById(type==='fixes'?'fiche-fixes':'fiche-cats');if(el)el.lastElementChild.scrollIntoView({behavior:'smooth'});},100);
+}
+function saveFiche(){
+  // Lire toutes les valeurs des inputs fixes (au cas où pas de onchange)
+  sv();toast('Fiche enregistrée ✓');renderActive();}
+
+// Color picker
+function openColorPicker(type,idx){
+  colorTargetType=type;colorTargetId=idx;
+  document.getElementById('color-grid').innerHTML=PALETTE.map(col=>`<button style="width:40px;height:40px;border-radius:50%;background:${col};border:2px solid ${col};cursor:pointer" onclick="pickColor('${col}')"></button>`).join('');
+  openModal('color-modal');
+}
+function pickColor(col){
+  if(colorTargetType==='cats') DB.cats[colorTargetId].couleur=col;
+  cm('color-modal');rFiche();
+}
+
+// ═══════════════════════════════════════════════════
+//  TX HTML
+// ═══════════════════════════════════════════════════
+function txHtml(t){
+  const isDep=t.type==='dep';
+  const catN=isDep?(gc(t.cat)||{nom:t.cat}).nom:t.cat;
+  return`<div class="tx"><div class="txl"><div class="txlbl">${t.lbl||catN}</div><div class="txmeta">${fmt(t.date)} · ${catN}</div></div><div class="txr"><div class="txamt ${isDep?'neg':'pos'}">${isDep?'−':'+'} ${fmtE(t.m)}</div><button class="delbtn" onclick="delTx('${t.id}')">×</button></div></div>`;
+}
+function delTx(id){DB.transactions=DB.transactions.filter(t=>t.id!==id);sv();renderActive();toast('Supprimé');}
+
+// ═══════════════════════════════════════════════════
+//  MODALS
+// ═══════════════════════════════════════════════════
+function openModal(id){document.getElementById(id).classList.add('open');}
+function cm(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
+
+function openAdd(){
+  document.getElementById('tx-mnt').value='';
+  document.getElementById('tx-lbl').value='';
+  document.getElementById('tx-date').value=today();
+  setType('dep');fillSel('tx-cat','dep');
+  openModal('add-modal');
+}
+function openScan(){
+  document.getElementById('tfile').value='';
+  document.getElementById('scan-prev').style.display='none';
+  document.getElementById('scan-res').style.display='none';
+  document.getElementById('sc-mnt').value='';
+  document.getElementById('sc-lbl').value='';
+  document.getElementById('sc-date').value=today();
+  fillSel('sc-cat','dep');
+  openModal('scan-modal');
+}
+function setType(t){
+  txType=t;
+  document.getElementById('btn-dep').classList.toggle('on',t==='dep');
+  document.getElementById('btn-rev').classList.toggle('on',t==='rev');
+  document.getElementById('cg').style.display=t==='dep'?'block':'none';
+  document.getElementById('add-title').textContent=t==='dep'?'Nouvelle dépense':'Nouveau revenu';
+  fillSel('tx-cat',t);
+}
+function fillSel(id,type){
+  const cats=type==='dep'?DB.cats:DB.revenus;
+  document.getElementById(id).innerHTML=cats.map(c=>`<option value="${c.id}">${type==='dep'?c.nom:c.nom}</option>`).join('');
+}
+function saveTx(){
+  const m=parseFloat(document.getElementById('tx-mnt').value),l=document.getElementById('tx-lbl').value.trim(),d=document.getElementById('tx-date').value,cat=document.getElementById('tx-cat').value;
+  if(!m||m<=0||!d){toast('Montant et date requis');return;}
+  const t={id:uid(),type:txType,m,lbl:l,cat,date:d};
+  DB.transactions.push(t);sv();cm('add-modal');renderActive();toast('Ajouté ✓');checkAl(t);
+}
+function saveScan(){
+  const m=parseFloat(document.getElementById('sc-mnt').value),l=document.getElementById('sc-lbl').value.trim(),d=document.getElementById('sc-date').value,cat=document.getElementById('sc-cat').value;
+  if(!m||m<=0||!d){toast('Montant requis');return;}
+  const t={id:uid(),type:'dep',m,lbl:l,cat,date:d};
+  DB.transactions.push(t);sv();cm('scan-modal');renderActive();toast('Dépense ajoutée ✓');checkAl(t);
+}
+
+// ═══════════════════════════════════════════════════
+//  TICKET SCAN
+// ═══════════════════════════════════════════════════
+function handleTicket(input){
+  const file=input.files[0];if(!file)return;
+  const url=URL.createObjectURL(file);
+  const img=document.getElementById('scan-prev');img.src=url;img.style.display='block';
+  toast('Analyse en cours…');
+  if(window.Tesseract){
+    Tesseract.recognize(url,'fra',{logger:()=>{}}).then(({data:{text}})=>{
+      const v=extractMontant(text);
+      if(v){document.getElementById('scan-res').style.display='block';document.getElementById('srv').textContent=v.toFixed(2).replace('.',',')+' €';document.getElementById('sc-mnt').value=v.toFixed(2);toast('Montant détecté : '+v.toFixed(2)+' €');}
+      else toast('Saisissez le montant manuellement');
+    }).catch(()=>toast('Saisissez le montant manuellement'));
+  }else toast('Saisissez le montant manuellement');
+}
+function extractMontant(t){
+  const lines=t.toLowerCase().split('\n');
+  for(const p of[/total[^\d]*(\d+[,.]\d{0,2})/,/montant[^\d]*(\d+[,.]\d{0,2})/,/(\d+[,.]\d{2})\s*[€e]/])
+    for(const l of lines){const m=l.match(p);if(m){const v=parseFloat(m[1].replace(',','.'));if(v>0&&v<9999)return v;}}
+  const all=[...t.matchAll(/\b(\d{1,4}[,.]\d{2})\b/g)].map(m=>parseFloat(m[1].replace(',','.')));
+  return all.length?Math.max(...all):null;
+}
+
+// ═══════════════════════════════════════════════════
+//  ALERTES
+// ═══════════════════════════════════════════════════
+function checkAl(tx){
+  if(tx.type!=='dep')return;
+  const bH=DB.seuils['h_'+tx.cat]||0;
+  if(!bH)return;
+  const soldePrev=cW>1?soldeGlissantCat(tx.cat,cW-1):0;
+  const budgetEff=bH+(soldePrev||0);
+  const s=sumC(txW(cW),tx.cat);
+  const st=stClass(s,budgetEff);
+  if(st==='ok')return;
+  const reportTxt=soldePrev>0?` (dont +${fmtE(soldePrev)} de report)`:soldePrev<0?` (dont ${fmtE(soldePrev)} de dette)`:'';
+  const msg=st==='over'
+    ? `⚠️ ${gc(tx.cat).nom} : dépassé de ${fmtE(s-budgetEff)} cette semaine${reportTxt}`
+    : `⚡ ${gc(tx.cat).nom} : 80% du budget semaine atteint${reportTxt}`;
+  setTimeout(()=>toast(msg,4500),700);
+}
+
+// ═══════════════════════════════════════════════════
+//  SYNC
+// ═══════════════════════════════════════════════════
+function exportData(){
+  const b=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);
+  a.download=`budget_${cY}_${MONTHS[cM].toLowerCase()}.json`;a.click();toast('Exporté ✓');
+}
+function importData(input){
+  const f=input.files[0];if(!f)return;
+  const r=new FileReader();r.onload=e=>{
+    try{const d=JSON.parse(e.target.result);if(d.transactions){DB=d;sv();renderActive();toast('Importé ✓');}}
+    catch(e){toast('Fichier invalide');}};
+  r.readAsText(f);
+}
+
+// ═══════════════════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════════════════
+let tt;
+function toast(msg,dur=2500){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>el.classList.remove('show'),dur);}
+
+// ═══════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════
+document.getElementById('month-lbl').textContent=MONTHS[cM].slice(0,4);
+rDash();
+const ts=document.createElement('script');ts.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';document.head.appendChild(ts);
+</script>
+</body>
+</html>
