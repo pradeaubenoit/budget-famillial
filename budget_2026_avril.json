@@ -1,0 +1,1128 @@
+{
+  "transactions": [
+    {
+      "id": "mnj3zoqajitb",
+      "type": "dep",
+      "m": 2.4,
+      "lbl": "Pain",
+      "cat": "alimentation",
+      "date": "2026-04-03"
+    },
+    {
+      "id": "mnj5dj3ul9fi",
+      "type": "dep",
+      "m": 22.11,
+      "lbl": "Intermarché",
+      "cat": "alimentation",
+      "date": "2026-04-03"
+    },
+    {
+      "id": "mnj5piwtxud5",
+      "type": "dep",
+      "m": 4.05,
+      "lbl": "Mac do boisson",
+      "cat": "alimentation",
+      "date": "2026-04-03"
+    },
+    {
+      "id": "mnk0l75fq100",
+      "type": "dep",
+      "m": 13,
+      "lbl": "Tabac",
+      "cat": "mnk0ipva3iwx",
+      "date": "2026-04-04"
+    },
+    {
+      "id": "mnk7120t34sx",
+      "type": "dep",
+      "m": 150,
+      "lbl": "Coiffeur",
+      "cat": "mnk2ofeo42vl",
+      "date": "2026-04-04"
+    },
+    {
+      "id": "mnk8llxb59fp",
+      "type": "dep",
+      "m": 50.47,
+      "lbl": "Intermarché",
+      "cat": "alimentation",
+      "date": "2026-04-04"
+    },
+    {
+      "id": "mnk8ntfcsrx9",
+      "type": "dep",
+      "m": 5.2,
+      "lbl": "Charbon de bois",
+      "cat": "alimentation",
+      "date": "2026-04-04"
+    },
+    {
+      "id": "mnkijqzd4f52",
+      "type": "dep",
+      "m": 28.5,
+      "lbl": "Bar",
+      "cat": "sorties",
+      "date": "2026-04-04"
+    },
+    {
+      "id": "mnkjmrrobf0s",
+      "type": "dep",
+      "m": 124.96,
+      "lbl": "Anniversaire Rachel",
+      "cat": "anniversaires",
+      "date": "2026-04-04"
+    },
+    {
+      "id": "mnkljufclxwk",
+      "type": "dep",
+      "m": 162.12,
+      "lbl": "Carrefour pâque et pizza",
+      "cat": "alimentation",
+      "date": "2026-04-04"
+    },
+    {
+      "id": "mnkmfcm74vee",
+      "type": "dep",
+      "m": 30.28,
+      "lbl": "Rachel",
+      "cat": "anniversaires",
+      "date": "2026-04-04"
+    },
+    {
+      "id": "mnlz8gex4e33",
+      "type": "dep",
+      "m": 8.5,
+      "lbl": "Autoroute cornelia",
+      "cat": "mnlyzf6v50de",
+      "date": "2026-04-05"
+    },
+    {
+      "id": "mnmuqvxs6uz7",
+      "type": "dep",
+      "m": 10,
+      "lbl": "",
+      "cat": "mnmuokr5nesb",
+      "date": "2026-04-06"
+    },
+    {
+      "id": "mnmus50w9lr0",
+      "type": "dep",
+      "m": 20,
+      "lbl": "Coiffeur et gel coiffant 10 euros",
+      "cat": "mnmup8njdym2",
+      "date": "2026-04-06"
+    },
+    {
+      "id": "mnmusix30oe3",
+      "type": "dep",
+      "m": 20,
+      "lbl": "",
+      "cat": "mnmupqx90323",
+      "date": "2026-04-06"
+    },
+    {
+      "id": "mnmusxfe921c",
+      "type": "dep",
+      "m": 5,
+      "lbl": "",
+      "cat": "retrait",
+      "date": "2026-04-06"
+    },
+    {
+      "id": "mnng0o6nx97o",
+      "type": "dep",
+      "m": 16.25,
+      "lbl": "",
+      "cat": "mnk0ipva3iwx",
+      "date": "2026-04-06"
+    },
+    {
+      "id": "mnoh71ho7k4x",
+      "type": "dep",
+      "m": 20,
+      "lbl": "Remboursement glace à Eliott",
+      "cat": "sorties",
+      "date": "2026-04-07"
+    },
+    {
+      "id": "mnoh78xs7qou",
+      "type": "dep",
+      "m": 20,
+      "lbl": "",
+      "cat": "mnoh5nqa77u4",
+      "date": "2026-04-07"
+    }
+  ],
+  "seuils": {
+    "h_alimentation": 110,
+    "global_semaine": 0,
+    "h_sorties": 0,
+    "h_vetements": 0,
+    "h_coiffeur": 0,
+    "h_sport": 0,
+    "h_vacances": 0,
+    "h_frais_ecoles": 0,
+    "h_sante": 0,
+    "h_babioles": 0,
+    "h_meubles": 0,
+    "h_anniversaires": 0,
+    "h_pret_famille": 0,
+    "h_retrait": 0,
+    "h_mnk0ipva3iwx": 0,
+    "h_mnk2ofeo42vl": 0,
+    "h_mnlyzf6v50de": 0,
+    "h_mnmuokr5nesb": 0,
+    "h_mnmup8njdym2": 0,
+    "h_mnmupqx90323": 0,
+    "h_mnoh5nqa77u4": 0
+  },
+  "revenus": [
+    {
+      "id": "sal_b",
+      "nom": "Salaire Benoît",
+      "mois": [
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000
+      ]
+    },
+    {
+      "id": "sal_r",
+      "nom": "Salaire Rachel",
+      "mois": [
+        2084.46,
+        2069.88,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000
+      ]
+    },
+    {
+      "id": "alloc",
+      "nom": "Allocations familiales",
+      "mois": [
+        885.73,
+        885,
+        885,
+        885,
+        885,
+        885,
+        885,
+        885,
+        885,
+        885,
+        885,
+        885
+      ]
+    },
+    {
+      "id": "form_r",
+      "nom": "Formation Rachel",
+      "mois": [
+        155.82,
+        0,
+        0,
+        0,
+        0,
+        155.82,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "remb_e",
+      "nom": "Remboursement eau",
+      "mois": [
+        96.56,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "fixes": [
+    {
+      "id": "f1",
+      "nom": "Loyer",
+      "mois": [
+        1158,
+        1158,
+        1158,
+        1158,
+        1158,
+        1158,
+        1158,
+        1158,
+        1158,
+        1158,
+        1158,
+        1158
+      ]
+    },
+    {
+      "id": "f2",
+      "nom": "Assurance Crédit Agricole",
+      "mois": [
+        32.32,
+        32.32,
+        32.32,
+        32.32,
+        32.32,
+        32.32,
+        32.32,
+        32.32,
+        32.32,
+        32.32,
+        32.32,
+        32.32
+      ]
+    },
+    {
+      "id": "f3",
+      "nom": "Assurance Hab.",
+      "mois": [
+        47.2,
+        47.2,
+        47.2,
+        47.2,
+        47.2,
+        47.2,
+        47.2,
+        47.2,
+        47.2,
+        47.2,
+        47.2,
+        47.2
+      ]
+    },
+    {
+      "id": "f4",
+      "nom": "Assurance voiture R4",
+      "mois": [
+        56,
+        56,
+        56,
+        56,
+        56,
+        56,
+        56,
+        56,
+        56,
+        56,
+        56,
+        56
+      ]
+    },
+    {
+      "id": "f5",
+      "nom": "Assurances banque pop.",
+      "mois": [
+        16.05,
+        16.05,
+        16.05,
+        16.05,
+        16.05,
+        16.05,
+        16.05,
+        16.05,
+        16.05,
+        16.05,
+        16.05,
+        16.05
+      ]
+    },
+    {
+      "id": "f6",
+      "nom": "Carte premium",
+      "mois": [
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17
+      ]
+    },
+    {
+      "id": "f7",
+      "nom": "Ceatis",
+      "mois": [
+        744.95,
+        744.95,
+        744.95,
+        744.95,
+        744.95,
+        744.95,
+        744.95,
+        744.95,
+        744.95,
+        744.95,
+        744.95,
+        744.95
+      ]
+    },
+    {
+      "id": "f8",
+      "nom": "Cofidis",
+      "mois": [
+        239.32,
+        239.32,
+        239.32,
+        239.32,
+        239.32,
+        239.32,
+        239.32,
+        239.32,
+        239.32,
+        239.32,
+        239.32,
+        239.32
+      ]
+    },
+    {
+      "id": "f9",
+      "nom": "Darty",
+      "mois": [
+        109.61,
+        21.99,
+        21.99,
+        21.99,
+        21.99,
+        21.99,
+        21.99,
+        21.99,
+        21.99,
+        21.99,
+        21.99,
+        21.99
+      ]
+    },
+    {
+      "id": "f10",
+      "nom": "Disney+",
+      "mois": [
+        0,
+        13.99,
+        10.99,
+        10.99,
+        10.99,
+        10.99,
+        10.99,
+        10.99,
+        10.99,
+        10.99,
+        10.99,
+        10.99
+      ]
+    },
+    {
+      "id": "f11",
+      "nom": "Eau",
+      "mois": [
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75
+      ]
+    },
+    {
+      "id": "f12",
+      "nom": "École Jeanne d'Arc",
+      "mois": [
+        143,
+        143,
+        143,
+        143,
+        143,
+        143,
+        143,
+        143,
+        143,
+        143,
+        143,
+        143
+      ]
+    },
+    {
+      "id": "f13",
+      "nom": "EDF",
+      "mois": [
+        90.48,
+        90.48,
+        90.48,
+        90.48,
+        90.48,
+        90.48,
+        90.48,
+        90.48,
+        90.48,
+        90.48,
+        90.48,
+        90.48
+      ]
+    },
+    {
+      "id": "f14",
+      "nom": "Épargne congés Rachel",
+      "mois": [
+        0,
+        0,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ]
+    },
+    {
+      "id": "f15",
+      "nom": "Épargne budget vacances",
+      "mois": [
+        0,
+        0,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ]
+    },
+    {
+      "id": "f16",
+      "nom": "Frais bancaire",
+      "mois": [
+        182.31,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "f17",
+      "nom": "Impôts",
+      "mois": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "f18",
+      "nom": "SFR",
+      "mois": [
+        100.93,
+        41.98,
+        41.98,
+        41.98,
+        41.98,
+        41.98,
+        41.98,
+        41.98,
+        41.98,
+        41.98,
+        41.98,
+        41.98
+      ]
+    },
+    {
+      "id": "f19",
+      "nom": "Mutuelle",
+      "mois": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "f20",
+      "nom": "Netflix",
+      "mois": [
+        0,
+        25.99,
+        14.99,
+        14.99,
+        14.99,
+        14.99,
+        14.99,
+        14.99,
+        14.99,
+        14.99,
+        14.99,
+        14.99
+      ]
+    },
+    {
+      "id": "f21",
+      "nom": "Prêt conso CA",
+      "mois": [
+        101.61,
+        101.61,
+        101.61,
+        101.61,
+        101.61,
+        101.61,
+        101.61,
+        101.61,
+        101.61,
+        101.61,
+        101.61,
+        101.61
+      ]
+    },
+    {
+      "id": "f22",
+      "nom": "Prêt renouvelable CA",
+      "mois": [
+        315,
+        315,
+        315,
+        315,
+        315,
+        315,
+        315,
+        315,
+        315,
+        315,
+        315,
+        315
+      ]
+    },
+    {
+      "id": "f23",
+      "nom": "Prêt voiture loc.",
+      "mois": [
+        220,
+        220,
+        220,
+        220,
+        220,
+        220,
+        220,
+        220,
+        220,
+        220,
+        220,
+        220
+      ]
+    },
+    {
+      "id": "f24",
+      "nom": "Prime Video",
+      "mois": [
+        0,
+        6.99,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "f25",
+      "nom": "Prêt Sofinco",
+      "mois": [
+        94,
+        94,
+        94,
+        94,
+        94,
+        94,
+        94,
+        94,
+        94,
+        94,
+        94,
+        94
+      ]
+    },
+    {
+      "id": "f26",
+      "nom": "Téléphone Cornelia SOSH",
+      "mois": [
+        25.99,
+        116,
+        25.99,
+        25.99,
+        25.99,
+        25.99,
+        25.99,
+        25.99,
+        25.99,
+        25.99,
+        25.99,
+        25.99
+      ]
+    },
+    {
+      "id": "f27",
+      "nom": "Deezer + Apple",
+      "mois": [
+        24.99,
+        24.99,
+        24.99,
+        24.99,
+        24.99,
+        24.99,
+        24.99,
+        24.99,
+        24.99,
+        24.99,
+        24.99,
+        24.99
+      ]
+    },
+    {
+      "id": "f28",
+      "nom": "Amazon",
+      "mois": [
+        109.61,
+        109.61,
+        109.61,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "f29",
+      "nom": "Basic Fit",
+      "mois": [
+        0,
+        35,
+        35,
+        35,
+        35,
+        35,
+        35,
+        35,
+        35,
+        35,
+        35,
+        35
+      ]
+    },
+    {
+      "id": "f30",
+      "nom": "Transport",
+      "mois": [
+        0,
+        51.93,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "f31",
+      "nom": "Trotinette",
+      "mois": [
+        65.28,
+        65.28,
+        65.28,
+        65.28,
+        65.28,
+        65.28,
+        65.28,
+        65.28,
+        65.28,
+        65.28,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "f32",
+      "nom": "Verisure",
+      "mois": [
+        63.9,
+        63.9,
+        63.9,
+        63.9,
+        63.9,
+        63.9,
+        63.9,
+        63.9,
+        63.9,
+        63.9,
+        63.9,
+        63.9
+      ]
+    },
+    {
+      "id": "f33",
+      "nom": "Assurance Clio",
+      "mois": [
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70
+      ]
+    },
+    {
+      "id": "f34",
+      "nom": "AP Eliott",
+      "mois": [
+        60,
+        20,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "f35",
+      "nom": "AP Eden",
+      "mois": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "f36",
+      "nom": "Pixpay",
+      "mois": [
+        11.98,
+        11.98,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "f37",
+      "nom": "Nounou",
+      "mois": [
+        109.5,
+        0,
+        136,
+        136,
+        136,
+        136,
+        136,
+        136,
+        136,
+        136,
+        136,
+        136
+      ]
+    },
+    {
+      "id": "f38",
+      "nom": "Ass. banque pop. vie",
+      "mois": [
+        408.4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "f39",
+      "nom": "Taxe foncière",
+      "mois": [
+        122,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "f40",
+      "nom": "Huissier",
+      "mois": [
+        100,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "f41",
+      "nom": "Animaux",
+      "mois": [
+        194.55,
+        0,
+        109.23,
+        0,
+        109.23,
+        0,
+        109.23,
+        0,
+        109.23,
+        0,
+        109.23,
+        0
+      ]
+    }
+  ],
+  "cats": [
+    {
+      "id": "alimentation",
+      "nom": "Alimentation",
+      "couleur": "#1D9E75"
+    },
+    {
+      "id": "sorties",
+      "nom": "Sorties & loisirs",
+      "couleur": "#378ADD"
+    },
+    {
+      "id": "vetements",
+      "nom": "Vêtements",
+      "couleur": "#9B6FD4"
+    },
+    {
+      "id": "coiffeur",
+      "nom": "Coiffeur",
+      "couleur": "#E07A20"
+    },
+    {
+      "id": "sport",
+      "nom": "Sport",
+      "couleur": "#2AABB0"
+    },
+    {
+      "id": "vacances",
+      "nom": "Vacances",
+      "couleur": "#D4965A"
+    },
+    {
+      "id": "frais_ecoles",
+      "nom": "Frais écoles",
+      "couleur": "#5A8CD4"
+    },
+    {
+      "id": "sante",
+      "nom": "Santé",
+      "couleur": "#D44E5A"
+    },
+    {
+      "id": "babioles",
+      "nom": "Babioles",
+      "couleur": "#8AA63C"
+    },
+    {
+      "id": "meubles",
+      "nom": "Achat mobilier",
+      "couleur": "#A06840"
+    },
+    {
+      "id": "anniversaires",
+      "nom": "Anniversaires",
+      "couleur": "#D45A8C"
+    },
+    {
+      "id": "pret_famille",
+      "nom": "Prêt famille",
+      "couleur": "#7A7970"
+    },
+    {
+      "id": "retrait",
+      "nom": "Retrait espèces",
+      "couleur": "#4A8070"
+    },
+    {
+      "id": "mnk0ipva3iwx",
+      "nom": "Tabac",
+      "couleur": "#2AABB0"
+    },
+    {
+      "id": "mnk2ofeo42vl",
+      "nom": "Coiffeur rachel",
+      "couleur": "#D44E5A"
+    },
+    {
+      "id": "mnlyzf6v50de",
+      "nom": "Autoroute ",
+      "couleur": "#2AABB0"
+    },
+    {
+      "id": "mnmuokr5nesb",
+      "nom": "Coiffeur gabriel",
+      "couleur": "#0F8A5F"
+    },
+    {
+      "id": "mnmup8njdym2",
+      "nom": "Coiffeur eden",
+      "couleur": "#5A8CD4"
+    },
+    {
+      "id": "mnmupqx90323",
+      "nom": "Coiffeur benoit",
+      "couleur": "#D4965A"
+    },
+    {
+      "id": "mnoh5nqa77u4",
+      "nom": "Coiffeur Eliott ",
+      "couleur": "#E07A20"
+    }
+  ],
+  "soldeDepart": -2600,
+  "varsPrev": [
+    600,
+    600,
+    600,
+    600,
+    600,
+    600,
+    600,
+    600,
+    600,
+    600,
+    600,
+    600
+  ]
+}
